@@ -1,7 +1,9 @@
-package com.project.namecard;
+package com.project.namecard.views;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.project.namecard.R;
 
 public class MainActivity extends AppCompatActivity {
 
