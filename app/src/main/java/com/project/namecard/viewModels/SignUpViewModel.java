@@ -20,7 +20,6 @@ public class SignUpViewModel extends ViewModel {
 
     //뷰 변수
     public MutableLiveData<String> ID = new MutableLiveData<>();
-    public MutableLiveData<String> IDCheck = new MutableLiveData<>("");
     public MutableLiveData<String> PassWord = new MutableLiveData<>();
     public MutableLiveData<String> PassWordCheck = new MutableLiveData<>();
     public MutableLiveData<String> Name = new MutableLiveData<>();
@@ -28,12 +27,15 @@ public class SignUpViewModel extends ViewModel {
     public MutableLiveData<String> Email = new MutableLiveData<>("");
     public MutableLiveData<String> EmailAddress = new MutableLiveData<>();
     public MutableLiveData<Integer> AddressSelect = new MutableLiveData<>(0);
+    //UI 제어 변수
+    public MutableLiveData<String> IDCheck = new MutableLiveData<>("");
     public MutableLiveData<String> SignUpCheck = new MutableLiveData<>("");
     //레트로핏
     private Retrofit retrofit = new Retrofit.Builder().baseUrl(RetrofitApi.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).build();
     private RetrofitApi retrofitApi = retrofit.create(RetrofitApi.class);
 
+    //아이디 중복 확인
     public void IDCheckBtnClick() {
         //아이디 빈값
         if("".equals(ID.getValue()) || null == ID.getValue()){

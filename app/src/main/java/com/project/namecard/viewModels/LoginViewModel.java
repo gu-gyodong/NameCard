@@ -1,8 +1,13 @@
 package com.project.namecard.viewModels;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.SharedPreferences;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.project.namecard.Interface.RetrofitApi;
 import com.project.namecard.models.LoginModel;
@@ -13,7 +18,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginViewModel extends ViewModel {
+public class LoginViewModel extends AndroidViewModel {
 
     //뷰 변수
     public MutableLiveData<String> ID = new MutableLiveData<>();
@@ -25,6 +30,21 @@ public class LoginViewModel extends ViewModel {
     private LoginModel model = new LoginModel();
     //레트로핏
     private RetrofitApi retrofitApi;
+
+    //뷰모델 초기세팅
+    public LoginViewModel(@NonNull Application application) {
+        super(application);
+
+        //자동 로그인 정보 확인
+        SharedPreferences Auto = getApplication().getSharedPreferences("user", Activity.MODE_PRIVATE);
+        ID.setValue(Auto.getString("ID", null));
+        PassWord.setValue(Auto.getString("PassWord", null));
+        //자동 로그인 정보 != null 로그인 시도
+        if(!("".equals(ID.getValue()) || null == ID.getValue()) &&
+                !("".equals(PassWord.getValue()) || null == PassWord.getValue())){
+            SignInBtnClick();
+        }
+    }
 
     //로그인 버튼 클릭 이벤트
     public void SignInBtnClick(){
@@ -45,6 +65,12 @@ public class LoginViewModel extends ViewModel {
                     //성공
                     if(response.body().getSuccess().equals("true")){
                         success.setValue(response.body().getSuccess());
+                        //자동 로그인 쉐어프리퍼렌스
+                        SharedPreferences Auto = getApplication().getSharedPreferences("user", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = Auto.edit();
+                        editor.putString("ID", ID.getValue());
+                        editor.putString("PassWord", PassWord.getValue());
+                        editor.commit();
                     }
                     else{
                         success.setValue("false");

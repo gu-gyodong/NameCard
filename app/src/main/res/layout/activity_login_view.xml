@@ -11,21 +11,20 @@
             type="com.project.namecard.viewModels.LoginViewModel" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Log In"
+                android:textSize="30dp"
+                android:textColor="#1A355B"
+                android:layout_gravity="center"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Log In"
-            android:textSize="30dp"
-            android:textColor="#1A355B"
-            android:layout_gravity="center"
-
-            android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"/>
             <EditText
                 android:id="@+id/ID"
                 android:layout_marginLeft="80dp"
@@ -44,48 +43,27 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:hint="PASSWORD"
+                android:inputType="textPassword"
                 android:text="@={viewModel.PassWord}"/>
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="80dp"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="자동 로그인"/>
-                <CheckBox
-                    android:id="@+id/AutoLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="5">
-                <Button
+                android:orientation="horizontal">
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/SignUp"
                     android:layout_marginRight="30dp"
                     android:layout_height="wrap_content"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:text="회원가입"
-                    android:textColor="#1A355B"
-                    android:layout_weight="1.5"
                     android:onClick="SignUpBtnClick"/>
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/SignIn"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="로그인"
-                    android:textColor="#1A355B"
-                    android:layout_weight="1.5"
                     android:onClick="@{() -> viewModel.SignInBtnClick()}"/>
             </LinearLayout>
-
-    </LinearLayout>
+        </LinearLayout>
 </layout>
