@@ -65,7 +65,7 @@ public class SignUpViewModel extends ViewModel {
     }
 
     //이메일 주소 스피너 아이템 선택 이벤트
-    public void AddressSelectImgClick(AdapterView<?> parent, View view, int pos, long id) {
+    public void AddressSelectClick(AdapterView<?> parent, View view, int pos, long id) {
         EmailAddress.setValue(parent.getSelectedItem().toString());
         AddressSelect.setValue(pos);
     }

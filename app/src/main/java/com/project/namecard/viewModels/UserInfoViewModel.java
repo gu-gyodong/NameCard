@@ -121,7 +121,7 @@ public class UserInfoViewModel extends AndroidViewModel {
 
     }
 
-    //회원 탈퇴 성공 -> 자동로그인 정보 delete
+    //회원 탈퇴 성공 -> 자동로그인 정보 deleteimage
     public void UserDeleteSuccess() {
         SharedPreferences Auto = getApplication().getSharedPreferences("user", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = Auto.edit();

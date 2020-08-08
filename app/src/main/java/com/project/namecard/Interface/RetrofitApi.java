@@ -1,8 +1,12 @@
 package com.project.namecard.Interface;
 
+import com.project.namecard.models.CardRegisterModel;
 import com.project.namecard.models.LoginModel;
+import com.project.namecard.models.MainFragmentMyModel;
 import com.project.namecard.models.SignUpModel;
 import com.project.namecard.models.UserInfoModel;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -46,5 +50,29 @@ public interface RetrofitApi {
     @GET("UserDeleteRequest.php")
     Call<UserInfoModel> UserDeleteRequest(@Query("ID") String ID,
                                           @Query("PassWord") String PassWord);
+
+    //프레그먼트 카드 리스트 요청
+    @GET("FragmentCardListRequest.php")
+    Call<List<MainFragmentMyModel>> FragmentCardListRequest(@Query("DBname") String DBname);
+
+    //카드 등록 요청
+    @GET("CardRegisterRequest.php")
+    Call<CardRegisterModel> CardRegisetRequeset(@Query("ID") String ID,
+                                                @Query("Owner") String Owner,
+                                                @Query("CardImage") String CardImage,
+                                                @Query("Name") String Name,
+                                                @Query("Company") String Company,
+                                                @Query("Depart") String Depart,
+                                                @Query("Position") String Position,
+                                                @Query("CompanyNumber") String CompanyNumber,
+                                                @Query("PhoneNumber") String PhoneNumber,
+                                                @Query("Email") String Email,
+                                                @Query("FaxNumber") String FaxNumber,
+                                                @Query("Address") String Address,
+                                                @Query("Memo") String Memo,
+                                                @Query("DBname") String DBname);
+
+
+
 
 }

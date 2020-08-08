@@ -1,7 +1,6 @@
 package com.project.namecard.views;
 
 import android.app.AlertDialog;
-import android.app.Application;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -120,7 +118,7 @@ public class UserInfoView extends AppCompatActivity {
                             .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //자동로그인 정보 delete
+                                    //자동로그인 정보 deleteimage
                                     viewModel.UserDeleteSuccess();
                                     //앱 재실행 로그인 화면
                                     Intent intent = new Intent(UserInfoView.this, LoginView.class);

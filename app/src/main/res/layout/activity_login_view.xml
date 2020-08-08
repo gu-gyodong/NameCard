@@ -11,59 +11,59 @@
             type="com.project.namecard.viewModels.LoginViewModel" />
     </data>
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log In"
+            android:textSize="30dp"
+            android:textColor="#1A355B"
+            android:layout_gravity="center"
+
+            android:layout_marginBottom="10dp"/>
+        <EditText
+            android:id="@+id/ID"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
-            <TextView
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:singleLine="true"
+            android:hint="ID"
+            android:text="@={viewModel.ID}"/>
+        <EditText
+            android:id="@+id/PassWord"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:hint="PASSWORD"
+            android:inputType="textPassword"
+            android:text="@={viewModel.PassWord}"/>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/SignUp"
+                android:layout_marginRight="30dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="회원가입"
+                android:onClick="SignUpBtnClick"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/SignIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Log In"
-                android:textSize="30dp"
-                android:textColor="#1A355B"
-                android:layout_gravity="center"
-
-                android:layout_marginBottom="10dp"/>
-            <EditText
-                android:id="@+id/ID"
-                android:layout_marginLeft="80dp"
-                android:layout_marginRight="80dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:singleLine="true"
-                android:hint="ID"
-                android:text="@={viewModel.ID}"/>
-            <EditText
-                android:id="@+id/PassWord"
-                android:layout_marginLeft="80dp"
-                android:layout_marginRight="80dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:hint="PASSWORD"
-                android:inputType="textPassword"
-                android:text="@={viewModel.PassWord}"/>
-            <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/SignUp"
-                    android:layout_marginRight="30dp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="회원가입"
-                    android:onClick="SignUpBtnClick"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/SignIn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="로그인"
-                    android:onClick="@{() -> viewModel.SignInBtnClick()}"/>
-            </LinearLayout>
+                android:text="로그인"
+                android:onClick="@{() -> viewModel.SignInBtnClick()}"/>
         </LinearLayout>
+    </LinearLayout>
 </layout>

@@ -17,7 +17,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.UserInfoView"></activity>
+        <activity
+            android:name=".views.CardAddressView"
+            android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".views.CardRegisterView" />
+        <activity android:name=".views.MainFragmentExchangeView" />
+        <activity android:name=".views.MainFragmentCardView" />
+        <activity android:name=".views.MainFragmentMyView" />
+        <activity android:name=".views.UserInfoView" />
         <activity android:name=".views.SignUpView" />
         <activity android:name=".views.LoginView">
             <intent-filter>
@@ -26,7 +33,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.MainActivity" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".views.MainView" />
     </application>
 
 </manifest>

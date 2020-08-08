@@ -40,7 +40,7 @@ public class LoginView extends AppCompatActivity {
             @Override
             public void onChanged(LoginModel loginModel) {
                 if(loginModel.getSuccess().equals("true")){
-                    Intent intent = new Intent(LoginView.this, MainActivity.class);
+                    Intent intent = new Intent(LoginView.this, MainView.class);
                     startActivity(intent);
                     finish();
                 }

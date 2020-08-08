@@ -107,7 +107,7 @@
                 android:onClick="BirthSelectImgClick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/calendarimage"
+                android:background="@drawable/cardregisterimage"
                 android:layout_marginRight="50dp"/>
         </LinearLayout>
 
@@ -140,8 +140,7 @@
                 android:singleLine="true"
                 android:inputType="textEmailAddress"/>
             <Spinner
-                android:id="@+id/EmailAddressSelect"
-                android:onItemSelected="@{(parent, view, pos, id) -> viewModel.AddressSelectImgClick(parent, view, pos, id)}"
+                android:onItemSelected="@{(parent, view, pos, id) -> viewModel.AddressSelectClick(parent, view, pos, id)}"
                 android:entries="@array/email_address_array"
                 android:layout_centerHorizontal="true"
                 android:layout_width="120dp"
