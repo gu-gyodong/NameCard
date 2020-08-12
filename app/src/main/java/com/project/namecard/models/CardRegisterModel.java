@@ -18,12 +18,11 @@ public class CardRegisterModel {
     public String EmailAddress;
     public String FaxNumber;
     public String Address;
-    public String Detailaddress;
     public String Memo;
 
     public void setCardRegister(String CardImage, String ID, String Owner, String Name, String Company, String Depart, String Position,
                                   String CompanyNumber, String PhoneNumber, String Email, String EmailAddress, String FaxNumber,
-                                  String Address, String DetailAddress, String Memo) {
+                                  String Address, String Memo) {
 
         this.CardImage = CardImage;
         this.ID = ID;
@@ -38,7 +37,6 @@ public class CardRegisterModel {
         this.EmailAddress = EmailAddress;
         this.FaxNumber = FaxNumber;
         this.Address = Address;
-        this.Detailaddress = DetailAddress;
         this.Memo = Memo;
     }
 
@@ -152,14 +150,6 @@ public class CardRegisterModel {
 
     public void setAddress(String address) {
         Address = address;
-    }
-
-    public String getDetailaddress() {
-        return Detailaddress;
-    }
-
-    public void setDetailaddress(String detailaddress) {
-        Detailaddress = detailaddress;
     }
 
     public String getMemo() {

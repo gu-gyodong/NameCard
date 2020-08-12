@@ -1,17 +1,21 @@
 package com.project.namecard.views;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +30,7 @@ import com.project.namecard.viewModels.CardRegisterViewModel;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -55,8 +60,6 @@ public class CardRegisterView extends AppCompatActivity {
 
         //카등 등록 정보 옵저버
         CardRegisterDataObserve();
-        //주소 검색
-        addressSelectClickEvent();
     }
 
     //카등 등록 정보 옵저버
@@ -102,31 +105,43 @@ public class CardRegisterView extends AppCompatActivity {
             }
         });
         //카드등록 결과 옵저버
-        viewModel.GetCardResterResult().observe(this, new Observer<String>() {
+        viewModel.GetCardRegisterResult().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 if(s.equals("pleaseNoEmpty")){
-                        //todo
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CardRegisterView.this);
+                    builder.setTitle("빈칸이 있습니다\n다시한번 확인해주세요")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
-                else if(s.equals("ture")){
-                    //todo
+                else if(s.equals("true")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CardRegisterView.this);
+                    builder.setTitle("카드 등록에 성공 했습니다.")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
                 else if(s.equals("false")){
-                    //todo
+                    Toast.makeText(getApplicationContext(),"카드등록 실패 했습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     //주소 선택 이벤트
-    private void addressSelectClickEvent() {
-        binding.addressSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CardRegisterView.this, CardAddressView.class);
+    public void addressSelectClickEvent(View view) {
+        Intent intent = new Intent(CardRegisterView.this, CardAddressView.class);
                 startActivityForResult(intent, 200);
-            }
-        });
     }
 
     //카드 이미지 메뉴
@@ -159,7 +174,7 @@ public class CardRegisterView extends AppCompatActivity {
         ImageDelete.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.CardImageBitmap.setValue(null);
+                viewModel.CardImageDeleteClick();
                 imageMenuDialog.dismiss();
             }
         });
@@ -215,5 +230,8 @@ public class CardRegisterView extends AppCompatActivity {
         }
     }
 
-
+    //취소 버튼 클릭
+    public void CancelBtnClick(View view) {
+        finish();
+    }
 }

@@ -1,10 +1,13 @@
 package com.project.namecard.models;
 
-public class MainFragmentMyModel {
+import android.graphics.Bitmap;
+
+public class MainFragmentCardModel {
+    public String Rep;
     public String CardID;
     public String ID;
     public String Owner;
-    public String CardImage;
+    public Bitmap CardImage;
     public String Name;
     public String Company;
     public String Depart;
@@ -16,9 +19,19 @@ public class MainFragmentMyModel {
     public String Address;
     public String Memo;
 
-    public void setCard(String CardID, String ID, String Owner, String CardImage,
+    public MainFragmentCardModel(String Name, String Company, Bitmap bitmap, String CardID, String ID, String Owner){
+        this.Name = Name;
+        this.Company = Company;
+        this.CardImage = bitmap;
+        this.CardID = CardID;
+        this.ID = ID;
+        this.Owner = Owner;
+    }
+
+    public void setCard(String Rep, String CardID, String ID, String Owner, Bitmap CardImage,
                         String Name, String Company, String Depart, String Position, String CompanyNumber,
                         String PhoneNumber, String Email, String FaxNumber, String Address, String Memo){
+        this.Rep = Rep;
         this.CardID = CardID;
         this.ID = ID;
         this.Owner = Owner;
@@ -34,6 +47,13 @@ public class MainFragmentMyModel {
         this.Address = Address;
         this.Memo = Memo;
 
+    }
+
+    public String getRep() {
+        return Rep;
+    }
+    public void setRep(String rep) {
+        Rep = rep;
     }
     public String getCardID() {
         return CardID;
@@ -53,10 +73,10 @@ public class MainFragmentMyModel {
     public void setOwner(String owner) {
         Owner = owner;
     }
-    public String getCardImage() {
+    public Bitmap getCardImage() {
         return CardImage;
     }
-    public void setCardImage(String cardImage) {
+    public void setCardImage(Bitmap cardImage) {
         CardImage = cardImage;
     }
     public String getName() {

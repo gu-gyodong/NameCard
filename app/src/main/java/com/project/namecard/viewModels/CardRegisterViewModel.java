@@ -2,6 +2,7 @@ package com.project.namecard.viewModels;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.Base64;
@@ -13,21 +14,23 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.project.namecard.Interface.RetrofitApi;
-import com.project.namecard.models.CardRegisterModel;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.project.namecard.Connection.CardRegisterRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CardRegisterViewModel extends AndroidViewModel {
 
     //뷰 변수
-    public MutableLiveData<String> CardImage = new MutableLiveData<String>("");
+    public MutableLiveData<String> CardImage = new MutableLiveData<>("");
+    public String CardBitmapString = "";
+    public Bitmap bitmap = null;
     public MutableLiveData<Bitmap> CardImageBitmap = new MutableLiveData<>(null);
     public MutableLiveData<String> ID = new MutableLiveData<String>();
     public MutableLiveData<String> Owner = new MutableLiveData<String>();
@@ -43,15 +46,10 @@ public class CardRegisterViewModel extends AndroidViewModel {
     public MutableLiveData<String> FaxNumber = new MutableLiveData<String>();
     public MutableLiveData<String> Address = new MutableLiveData<String>();
     public MutableLiveData<String> Detailaddress = new MutableLiveData<String>();
-    public MutableLiveData<String> Memo = new MutableLiveData<String>(null);
-    String DBname = "BD_user_";
+    public MutableLiveData<String> Memo = new MutableLiveData<String>("");
+    public String DBname;
     //UI 제어 변수
     public MutableLiveData<String> RegisterResult = new MutableLiveData<>("");
-    //레트로핏
-    private Retrofit retrofit = new Retrofit.Builder().baseUrl(RetrofitApi.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create()).build();
-    private RetrofitApi retrofitApi = retrofit.create(RetrofitApi.class);
-
 
     //초기 세팅
     public CardRegisterViewModel(@NonNull Application application) {
@@ -59,8 +57,7 @@ public class CardRegisterViewModel extends AndroidViewModel {
         //아이디 값 받기
         SharedPreferences Auto = getApplication().getSharedPreferences("user", Activity.MODE_PRIVATE);
         ID.setValue(Auto.getString("ID", null));
-        //DBname 생성
-        DBname += ID.getValue();
+        DBname = Auto.getString("DBname", null);
     }
 
     //이메일 주소 스피너 아이템 선택 이벤트
@@ -69,8 +66,10 @@ public class CardRegisterViewModel extends AndroidViewModel {
         AddressSelect.setValue(pos);
     }
 
-    public void CardRegistorRequest(){
+    public void CardRegisterRequest(){
         RegisterResult.setValue("");
+
+        //빈 정보 확인
         if(!("".equals(Name.getValue()) || null == Name.getValue()) &&
                 !("".equals(Company.getValue()) || null == Company.getValue()) &&
                 !("".equals(Depart.getValue()) || null == Depart.getValue()) &&
@@ -80,72 +79,71 @@ public class CardRegisterViewModel extends AndroidViewModel {
                 !("".equals(Email.getValue()) || null == Email.getValue()) &&
                 !("".equals(EmailAddress.getValue()) || null == EmailAddress.getValue()) &&
                 !("".equals(FaxNumber.getValue()) || null == FaxNumber.getValue()) &&
-                !("".equals(Address.getValue()) || null == Address.getValue()) ){
+                !("".equals(Address.getValue()) || null == Address.getValue()) ) {
 
-            //카드 이미지 리사이징
+            //이메일, 주소 합치기
+            String TotalEmail = Email.getValue() + "@" + EmailAddress.getValue();
+            String TotalAddress = Address.getValue() + " " + Detailaddress.getValue();
 
-            retrofitApi.CardRegisetRequeset(ID.getValue(), "mine", CardImage.getValue(), Name.getValue(),
-                    Company.getValue(), Depart.getValue(), Position.getValue(), CompanyNumber.getValue(), PhoneNumber.getValue(),
-                    Email.getValue(), FaxNumber.getValue(), Address.getValue(), Memo.getValue(), DBname).enqueue(new Callback<CardRegisterModel>() {
+            //이미지 존재시 리사이징, 스트링화
+            bitmap = CardImageBitmap.getValue();
+            if (bitmap != null) {
+                //비트맵 리사이징
+                int width = bitmap.getWidth();
+                int height = bitmap.getHeight();
+                int newWidth = width;
+                int newHeight = height;
+
+                while (newWidth >= 800) {
+                    newWidth = newWidth * 3 / 4;
+                    newHeight = newHeight * 3 / 4;
+                }
+                bitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
+                CardImageBitmap.setValue(bitmap);
+
+                //비트맵.toString
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                String text = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+                CardImage.setValue(text);
+            }
+
+            //볼리 통신
+            Response.Listener<String> responseListener = new Response.Listener<String>() {
                 @Override
-                public void onResponse(Call<CardRegisterModel> call, Response<CardRegisterModel> response) {
-                    //성공
-                    if(response.body()!=null){
-                        if(response.body().getSuccess().equals("true")){
-                            RegisterResult.setValue("success");
+                public void onResponse(String response) {
+                    try{
+                        JSONObject jsonObject = new JSONObject(response);
+                        Boolean success = jsonObject.getBoolean("success");
+                        if(success) {
+                            RegisterResult.setValue("true");
                         }
                         else{
                             RegisterResult.setValue("false");
                         }
                     }
-                    else {
-                        RegisterResult.setValue("false");
+                    catch (JSONException e){
+                        e.printStackTrace();
                     }
                 }
-
-                @Override
-                public void onFailure(Call<CardRegisterModel> call, Throwable t) {
-                    //실패
-                }
-            });
+            };
+            CardRegisterRequest cardRegisterRequest = new CardRegisterRequest(CardImage.getValue(), ID.getValue(), "mine", Name.getValue(), Company.getValue()
+                    , Depart.getValue(), Position.getValue(), CompanyNumber.getValue(), PhoneNumber.getValue(), TotalEmail, FaxNumber.getValue(),
+                    TotalAddress, Memo.getValue(), DBname, responseListener);
+            RequestQueue queue = Volley.newRequestQueue(getApplication().getBaseContext());
+            queue.add(cardRegisterRequest);
         }
-        else {
+        else{
             RegisterResult.setValue("pleaseNoEmpty");
         }
     }
 
-    //이미지 리사이즈
-    public void ImageResize() {
-        int width = CardImageBitmap.getValue().getWidth();
-        int height = CardImageBitmap.getValue().getHeight();
-        int newWidth = width;
-        int newHeight = height;
-        float rate = 0.0f;
-        int maxResolution = 800;
-        if (width > height) {
-            if (maxResolution < width) {
-                rate = maxResolution / (float) width;
-                newHeight = (int) (height * rate);
-                newWidth = maxResolution;
-            }
-        } else {
-            if (maxResolution < height) {
-                rate = maxResolution / (float) height;
-                newWidth = (int) (width * rate);
-                newHeight = maxResolution;
-            }
-        }
-        CardImageBitmap.setValue(Bitmap.createScaledBitmap(CardImageBitmap.getValue(), newWidth, newHeight, true));
+    public void CardImageDeleteClick(){
+        CardImageBitmap.setValue(null);
+        CardImage.setValue("");
+        CardBitmapString = "";
     }
-    //Bitmap -> Byte (DB저장 위해)
-    public void BitmaptoString() {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        CardImageBitmap.getValue().compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        CardImage.setValue(Base64.encodeToString(imageBytes, Base64.DEFAULT));
-    }
-
-
 
     //이메일 주소선택 값 반환
     public LiveData<Integer> GetSelectResult() {
@@ -158,7 +156,7 @@ public class CardRegisterViewModel extends AndroidViewModel {
     }
 
     //카드 등록 결과 반환
-    public LiveData<String> GetCardResterResult() {
+    public LiveData<String> GetCardRegisterResult() {
         return RegisterResult;
     }
 }

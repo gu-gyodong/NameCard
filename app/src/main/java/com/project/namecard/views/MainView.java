@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,7 +18,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.project.namecard.R;
@@ -37,9 +35,9 @@ public class MainView extends AppCompatActivity {
     //프레그먼트 변수
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-    private MainFragmentMyView mainFragmentMyView;
-    private MainFragmentCardView mainFragmentCardView = new MainFragmentCardView();
+    private MainFragmentCardView mainFragmentCardView = new MainFragmentCardView();;
     private MainFragmentExchangeView mainFragmentExchangeView = new MainFragmentExchangeView();
+    private MainFragmentInfoView mainFragmentInfoView = new MainFragmentInfoView();
 
 
     @Override
@@ -53,8 +51,6 @@ public class MainView extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
-        //프레그 먼트 생성
-        mainFragmentMyView = new MainFragmentMyView();
 
         //권한 요청
         RequestPermission();
@@ -123,16 +119,16 @@ public class MainView extends AppCompatActivity {
         //프레그먼트 전환
         switch (n){
             case 0:
-                fragmentTransaction.replace(R.id.mainFrame, mainFragmentMyView).commit();
-                mainFragmentMyView.setArguments(bundle);
-                break;
-            case 1:
                 fragmentTransaction.replace(R.id.mainFrame, mainFragmentCardView).commit();
                 mainFragmentCardView.setArguments(bundle);
                 break;
-            case 2:
+            case 1:
                 fragmentTransaction.replace(R.id.mainFrame, mainFragmentExchangeView).commit();
                 mainFragmentExchangeView.setArguments(bundle);
+                break;
+            case 2:
+                fragmentTransaction.replace(R.id.mainFrame, mainFragmentInfoView).commit();
+                mainFragmentInfoView.setArguments(bundle);
                 break;
         }
     }
@@ -143,13 +139,13 @@ public class MainView extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
-                    case R.id.My:
+                    case R.id.Card:
                         SetFrag(0);
                         break;
-                    case R.id.Card:
+                    case R.id.Exchange:
                         SetFrag(1);
                         break;
-                    case R.id.Exchange:
+                    case R.id.Info:
                         SetFrag(2);
                         break;
                 }

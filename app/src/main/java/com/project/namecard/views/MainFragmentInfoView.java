@@ -11,15 +11,13 @@ import android.view.ViewGroup;
 
 import com.project.namecard.R;
 
-public class MainFragmentExchangeView extends Fragment {
-
-    MainFragmentExchangeView binding;
+public class MainFragmentInfoView extends Fragment {
     View view;
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.activity_main_fragment_exchange_view, container, false);
+        view = inflater.inflate(R.layout.activity_main_fragment_info_view, container, false);
 
         return view;
     }

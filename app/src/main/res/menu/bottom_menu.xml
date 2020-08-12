@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/My"
-        android:enabled="true"
-        android:title="My"
-        android:icon="@drawable/navi_my"/>
-    <item
         android:id="@+id/Card"
         android:enabled="true"
         android:title="Card"
@@ -15,4 +10,9 @@
         android:enabled="true"
         android:title="Exchange"
         android:icon="@drawable/navi_exchange"/>
+    <item
+        android:id="@+id/Info"
+        android:enabled="true"
+        android:title="Info"
+        android:icon="@drawable/navi_info"/>
 </menu>

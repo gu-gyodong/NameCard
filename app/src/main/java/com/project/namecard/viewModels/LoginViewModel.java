@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.project.namecard.Interface.RetrofitApi;
+import com.project.namecard.Connection.RetrofitApi;
 import com.project.namecard.models.LoginModel;
 
 import retrofit2.Call;
@@ -30,6 +30,7 @@ public class LoginViewModel extends AndroidViewModel {
     private LoginModel model = new LoginModel();
     //레트로핏
     private RetrofitApi retrofitApi;
+    //유저 디비
 
     //뷰모델 초기세팅
     public LoginViewModel(@NonNull Application application) {
@@ -49,8 +50,9 @@ public class LoginViewModel extends AndroidViewModel {
     //로그인 버튼 클릭 이벤트
     public void SignInBtnClick(){
 
-        String id = ID.getValue();
-        String password = PassWord.getValue();
+        final String id = ID.getValue();
+        final String password = PassWord.getValue();
+        final String DBname = "BC_user_" + id;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitApi.BASE_URL)
@@ -68,8 +70,9 @@ public class LoginViewModel extends AndroidViewModel {
                         //자동 로그인 쉐어프리퍼렌스
                         SharedPreferences Auto = getApplication().getSharedPreferences("user", Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = Auto.edit();
-                        editor.putString("ID", ID.getValue());
-                        editor.putString("PassWord", PassWord.getValue());
+                        editor.putString("ID", id);
+                        editor.putString("PassWord", password);
+                        editor.putString("DBname", DBname);
                         editor.commit();
                     }
                     else{

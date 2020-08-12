@@ -39,7 +39,7 @@ public class CardAddressView extends Activity {
         addressimage.addJavascriptInterface(new AndroidBridge(), "TestApp");
         // web client 를 chrome 으로 설정
         addressimage.setWebChromeClient(new WebChromeClient());
-        addressimage.loadUrl("https://rnryehd111.cafe24.com/BusinessCard/AddressApi.php");
+        addressimage.loadUrl("https://rnryehd111.cafe24.com/NameCard/AddressApi.php");
     }
     private class AndroidBridge {
         @JavascriptInterface

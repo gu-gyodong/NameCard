@@ -21,9 +21,9 @@
             android:name=".views.CardAddressView"
             android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".views.CardRegisterView" />
+        <activity android:name=".views.MainFragmentInfoView" />
         <activity android:name=".views.MainFragmentExchangeView" />
         <activity android:name=".views.MainFragmentCardView" />
-        <activity android:name=".views.MainFragmentMyView" />
         <activity android:name=".views.UserInfoView" />
         <activity android:name=".views.SignUpView" />
         <activity android:name=".views.LoginView">

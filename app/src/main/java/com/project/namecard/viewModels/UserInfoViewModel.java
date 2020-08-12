@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.project.namecard.Interface.RetrofitApi;
+import com.project.namecard.Connection.RetrofitApi;
 import com.project.namecard.models.UserInfoModel;
 
 import retrofit2.Call;
