@@ -1,11 +1,8 @@
-package com.project.namecard.Connection;
+package com.project.namecard.connection;
 
 import com.project.namecard.models.LoginModel;
-import com.project.namecard.models.MainFragmentCardModel;
 import com.project.namecard.models.SignUpModel;
-import com.project.namecard.models.UserInfoModel;
-
-import java.util.List;
+import com.project.namecard.models.MainFragmentInfoModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -34,21 +31,21 @@ public interface RetrofitApi {
 
     //회원 정보 요청
     @GET("UserInfoRequest.php")
-    Call<UserInfoModel> UserInfoRequest(@Query("ID") String ID,
-                                        @Query("PassWord") String PassWord);
+    Call<MainFragmentInfoModel> UserInfoRequest(@Query("ID") String ID,
+                                                @Query("PassWord") String PassWord);
 
     //회원정보 수정 요청
     @GET("UserUpdateRequest.php")
-    Call<UserInfoModel> UserUpdateRequest(@Query("ID") String ID,
-                                          @Query("PassWord") String PassWord,
-                                          @Query("Name") String Name,
-                                          @Query("Birth") String Birth,
-                                          @Query("Email") String Email);
+    Call<MainFragmentInfoModel> UserUpdateRequest(@Query("ID") String ID,
+                                                  @Query("PassWord") String PassWord,
+                                                  @Query("Name") String Name,
+                                                  @Query("Birth") String Birth,
+                                                  @Query("Email") String Email);
 
     //회원 정보 삭제 요청
     @GET("UserDeleteRequest.php")
-    Call<UserInfoModel> UserDeleteRequest(@Query("ID") String ID,
-                                          @Query("PassWord") String PassWord);
+    Call<MainFragmentInfoModel> UserDeleteRequest(@Query("ID") String ID,
+                                                  @Query("PassWord") String PassWord);
 
     //프레그먼트 카드 리스트 요청
     @GET("FragmentCardListRequest.php")

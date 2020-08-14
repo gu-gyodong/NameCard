@@ -2,7 +2,6 @@ package com.project.namecard.viewModels;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.Base64;
@@ -17,7 +16,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.project.namecard.Connection.CardRegisterRequest;
+import com.project.namecard.connection.CardRegisterRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;

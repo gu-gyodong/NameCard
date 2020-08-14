@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -25,12 +24,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.project.namecard.R;
+import com.project.namecard.connection.CardAddressRequeset;
 import com.project.namecard.databinding.ActivityCardRegisterViewBinding;
 import com.project.namecard.viewModels.CardRegisterViewModel;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -140,7 +139,7 @@ public class CardRegisterView extends AppCompatActivity {
 
     //주소 선택 이벤트
     public void addressSelectClickEvent(View view) {
-        Intent intent = new Intent(CardRegisterView.this, CardAddressView.class);
+        Intent intent = new Intent(CardRegisterView.this, CardAddressRequeset.class);
                 startActivityForResult(intent, 200);
     }
 

@@ -1,4 +1,4 @@
-package com.project.namecard.Connection;
+package com.project.namecard.connection;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;

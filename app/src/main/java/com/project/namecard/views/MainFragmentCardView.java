@@ -10,16 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.project.namecard.Adapter.NotMineCardRecyclerViewAdapter;
 import com.project.namecard.R;
+import com.project.namecard.adapter.NotMineCardRecyclerViewAdapter;
 import com.project.namecard.databinding.ActivityMainFragmentCardViewBinding;
 import com.project.namecard.models.MainFragmentCardModel;
-import com.project.namecard.viewModels.MainFragmentCardViewModel;
+import com.project.namecard.viewModels.MainFragmentSharedViewModel;
 
 import java.util.ArrayList;
 
@@ -30,10 +29,7 @@ public class MainFragmentCardView extends Fragment {
     //바인딩
     private ActivityMainFragmentCardViewBinding binding;
     //뷰 모델
-    private MainFragmentCardViewModel viewModel;
-    //리사이클러뷰 변수
-    private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-
+    private MainFragmentSharedViewModel viewModel;
 
     @Nullable
     @Override
@@ -41,14 +37,15 @@ public class MainFragmentCardView extends Fragment {
         //데이터 바인딩
         binding = DataBindingUtil.inflate(inflater, R.layout.activity_main_fragment_card_view, container, false);
         //뷰 모델
-        viewModel = new ViewModelProvider(this).get(MainFragmentCardViewModel.class);
+        viewModel = new ViewModelProvider(this).get(MainFragmentSharedViewModel.class);
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
         //뷰 세팅
         view = binding.getRoot();
+        //리사이클러뷰 메니저 세팅
+        binding.NotMineCardList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-        viewModel.StatCardSetting();
+        //버튼 클릭 이벤트
         binding.register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,30 +55,30 @@ public class MainFragmentCardView extends Fragment {
             }
         });
 
-
-//        viewModel.returnBitmap().observe(getViewLifecycleOwner(), new Observer<Bitmap>() {
-//            @Override
-//            public void onChanged(Bitmap bitmap) {
-//                binding.MyRepCardImage.setImageBitmap(bitmap);
-//            }
-//        });
-
-
-        viewModel.getNotMineCardList().observe(getViewLifecycleOwner(), new Observer<ArrayList<MainFragmentCardModel>>() {
-            @Override
-            public void onChanged(ArrayList<MainFragmentCardModel> mainFragmentCardModels) {
-                RecyclerViewSetting();
-            }
-        });
-
+        //카드 데이터 옵저버
+        getDataObserve();
 
         return view;
     }
 
-    //리사이클러뷰 세팅
-    public void RecyclerViewSetting(){
-        binding.NotMineCardList.setLayoutManager(linearLayoutManager);
-        NotMineCardRecyclerViewAdapter notMineCardRecyclerViewAdapter = new NotMineCardRecyclerViewAdapter(viewModel.NotMineCardList);
-        binding.NotMineCardList.setAdapter(notMineCardRecyclerViewAdapter);
+    //카드 데이터 옵저버
+    private void getDataObserve(){
+        //대표카드 옵저버
+        viewModel.getMyRepCard().observe(getViewLifecycleOwner(), new Observer<MainFragmentCardModel>() {
+            @Override
+            public void onChanged(MainFragmentCardModel mainFragmentCardModel) {
+                //태표카드 이미지 세팅
+                binding.MyRepCardImage.setImageBitmap(mainFragmentCardModel.getCardImage());
+            }
+        });
+        //교환 카드 리스트 옵저버
+        viewModel.getNotMineCardList().observe(getViewLifecycleOwner(), new Observer<ArrayList<MainFragmentCardModel>>() {
+            @Override
+            public void onChanged(ArrayList<MainFragmentCardModel> mainFragmentCardModels) {
+                //교환 카드 리스트 이미지 세팅
+                NotMineCardRecyclerViewAdapter notMineCardRecyclerViewAdapter = new NotMineCardRecyclerViewAdapter((ArrayList<MainFragmentCardModel>) mainFragmentCardModels);
+                binding.NotMineCardList.setAdapter(notMineCardRecyclerViewAdapter);
+            }
+        });
     }
 }

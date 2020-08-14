@@ -1,6 +1,6 @@
 package com.project.namecard.models;
 
-public class UserInfoModel {
+public class MainFragmentInfoModel {
     public String success;
     public String ID;
     public String PassWord;

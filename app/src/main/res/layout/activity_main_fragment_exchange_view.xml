@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".views.MainFragmentExchangeView">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.project.namecard.viewModels.MainFragmentSharedViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -11,10 +17,31 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="Exchange"
-            android:textSize="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원 님의 QR 코드 입니다."
+            android:textSize="30dp"/>
+
+        <ImageView
+            android:id="@+id/QRCodeImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:text="QR 코드 스캔"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:text="FNC 교환"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

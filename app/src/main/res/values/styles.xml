@@ -1,12 +1,12 @@
 <resources>
     <!-- Base application theme. -->
 <!--    "Theme.AppCompat.Light.NoActionBar"-->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#1A355B</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">#2f508f</item>
-        <item name="android:statusBarColor">#152A49</item>
+        <item name="android:statusBarColor">#464646</item>
     </style>
 
     <style name="DatePickerMode" parent = "android:Theme.Material.Dialog">

@@ -1,4 +1,4 @@
-package com.project.namecard.views;
+package com.project.namecard.connection;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.webkit.WebView;
 
 import com.project.namecard.R;
 
-public class CardAddressView extends Activity {
+public class CardAddressRequeset extends Activity {
 
     WebView addressimage;
     Handler handler;

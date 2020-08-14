@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.project.namecard.Connection.RetrofitApi;
+import com.project.namecard.connection.RetrofitApi;
 import com.project.namecard.models.SignUpModel;
 
 import retrofit2.Call;

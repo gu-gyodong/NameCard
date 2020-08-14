@@ -9,8 +9,12 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.project.namecard.Connection.RetrofitApi;
-import com.project.namecard.models.UserInfoModel;
+import com.project.namecard.connection.RetrofitApi;
+import com.project.namecard.models.MainFragmentCardModel;
+import com.project.namecard.models.MainFragmentInfoModel;
+import com.project.namecard.repository.MainFragmentCardRepository;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,8 +22,22 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class UserInfoViewModel extends AndroidViewModel {
-    //뷰 변수
+public class MainFragmentSharedViewModel extends AndroidViewModel {
+
+    //레트로핏
+    private Retrofit retrofit = new Retrofit.Builder().baseUrl(RetrofitApi.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create()).build();
+    private RetrofitApi retrofitApi = retrofit.create(RetrofitApi.class);
+
+    //////////Card 변수//////////
+    //카드 레포지토리 변수
+    public MainFragmentCardRepository mainFragmentCardRepository;
+
+    //////////Exchange 변수//////////
+
+
+    //////////Info 변수//////////
+    //Info -> 유저 정보 뷰 변수
     public MutableLiveData<String> ID = new MutableLiveData<>();
     public MutableLiveData<String> PassWord = new MutableLiveData<>();
     public MutableLiveData<String> Name = new MutableLiveData<>();
@@ -29,48 +47,65 @@ public class UserInfoViewModel extends AndroidViewModel {
     //UI 제어 변수
     public MutableLiveData<String> UIStateText = new MutableLiveData<>("state1");
     public MutableLiveData<String> UserDateText = new MutableLiveData<>("");
-    //레트로핏
-    private Retrofit retrofit = new Retrofit.Builder().baseUrl(RetrofitApi.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create()).build();
-    private RetrofitApi retrofitApi = retrofit.create(RetrofitApi.class);
     //모델
-    UserInfoModel model = new UserInfoModel();
+    MainFragmentInfoModel InfoModel = new MainFragmentInfoModel();
 
-    //뷰모델 초기세팅
-    public UserInfoViewModel(@NonNull Application application) {
+    //viewModel 초기 설정 - > shared Fragment viewModel
+    public MainFragmentSharedViewModel(@NonNull Application application) {
         super(application);
+
         //회원정보 받아오기
         SharedPreferences Auto = getApplication().getSharedPreferences("user", Activity.MODE_PRIVATE);
         ID.setValue(Auto.getString("ID", null));
         PassWord.setValue(Auto.getString("PassWord", null));
+
+        //Card - > 카드 레포지토리 생성
+        mainFragmentCardRepository = new MainFragmentCardRepository(application);
+
     }
 
+
+    //////////Card 메소드//////////
+    //내 대표 카드 반환
+    public LiveData<MainFragmentCardModel> getMyRepCard(){
+        return  mainFragmentCardRepository.getMyRepCard();
+    }
+    //교환한 카드 반환
+    public LiveData<ArrayList<MainFragmentCardModel>> getNotMineCardList(){
+        return  mainFragmentCardRepository.getNotMineCardList();
+    }
+
+    //////////Exchange 메소드//////////
+
+
+
+
+    //////////Info 메소드//////////
     //유저 기본 정보 받기
     public void GetUserInfo(){
-        retrofitApi.UserInfoRequest(ID.getValue(), PassWord.getValue()).enqueue(new Callback<UserInfoModel>() {
+        retrofitApi.UserInfoRequest(ID.getValue(), PassWord.getValue()).enqueue(new Callback<MainFragmentInfoModel>() {
             @Override
-            public void onResponse(Call<UserInfoModel> call, Response<UserInfoModel> response) {
+            public void onResponse(Call<MainFragmentInfoModel> call, Response<MainFragmentInfoModel> response) {
                 //모델 세팅
-                model = response.body();
+                InfoModel = response.body();
                 //성공
-                if (model.getSuccess().equals("true")) {
+                if (InfoModel.getSuccess().equals("true")) {
                     //결과 세팅
-                    ID.setValue(model.getID());
-                    PassWord.setValue(model.getPassWord());
-                    Name.setValue(model.getName());
-                    Birth.setValue(model.getBirth());
-                    int i = model.getEmail().indexOf("@");
-                    Email.setValue(model.getEmail().substring(0, i));
-                    EmailAddress.setValue(model.getEmail().substring(i + 1));
+                    ID.setValue(InfoModel.getID());
+                    PassWord.setValue(InfoModel.getPassWord());
+                    Name.setValue(InfoModel.getName());
+                    Birth.setValue(InfoModel.getBirth());
+                    int i = InfoModel.getEmail().indexOf("@");
+                    Email.setValue(InfoModel.getEmail().substring(0, i));
+                    EmailAddress.setValue(InfoModel.getEmail().substring(i + 1));
                 }
             }
             @Override
-            public void onFailure(Call<UserInfoModel> call, Throwable t) {
+            public void onFailure(Call<MainFragmentInfoModel> call, Throwable t) {
                 //실패
             }
         });
     }
-
     //유저 정보 업데이트 요청
     public void BtnUserUpdateRequestClick(){
         UserDateText.setValue("");
@@ -83,9 +118,9 @@ public class UserInfoViewModel extends AndroidViewModel {
             String TotalEmail =  Email.getValue() + "@" + EmailAddress.getValue();
             //업데이트 요청 시작
             retrofitApi.UserUpdateRequest(ID.getValue(), PassWord.getValue(), Name.getValue(), Birth.getValue(), TotalEmail)
-                    .enqueue(new Callback<UserInfoModel>() {
+                    .enqueue(new Callback<MainFragmentInfoModel>() {
                         @Override
-                        public void onResponse(Call<UserInfoModel> call, Response<UserInfoModel> response) {
+                        public void onResponse(Call<MainFragmentInfoModel> call, Response<MainFragmentInfoModel> response) {
                             //성공
                             if(response.body().getSuccess().equals("true")){
                                 UserDateText.setValue("updateSuccess");
@@ -93,7 +128,7 @@ public class UserInfoViewModel extends AndroidViewModel {
                         }
 
                         @Override
-                        public void onFailure(Call<UserInfoModel> call, Throwable t) {
+                        public void onFailure(Call<MainFragmentInfoModel> call, Throwable t) {
                             //실패
                         }
                     });
@@ -102,25 +137,33 @@ public class UserInfoViewModel extends AndroidViewModel {
             UserDateText.setValue("pleaseNoBlank");
         }
     }
-
     //유저 정보 삭제 요청
     public void BtnUSerDeleteRequest() {
-        retrofitApi.UserDeleteRequest(ID.getValue(), PassWord.getValue()).enqueue(new Callback<UserInfoModel>() {
+        retrofitApi.UserDeleteRequest(ID.getValue(), PassWord.getValue()).enqueue(new Callback<MainFragmentInfoModel>() {
             @Override
-            public void onResponse(Call<UserInfoModel> call, Response<UserInfoModel> response) {
+            public void onResponse(Call<MainFragmentInfoModel> call, Response<MainFragmentInfoModel> response) {
                 //성공
                 if(response.body().getSuccess().equals("true")){
                     UserDateText.setValue("deleteSuccess");
                 }
             }
             @Override
-            public void onFailure(Call<UserInfoModel> call, Throwable t) {
+            public void onFailure(Call<MainFragmentInfoModel> call, Throwable t) {
                 //실패
             }
         });
 
     }
+    //로그아웃
+    public void LogOutRequest() {
+        //회원 정보 임시저장 삭체
+        SharedPreferences Auto = getApplication().getSharedPreferences("user", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = Auto.edit();
+        editor.clear();
+        editor.commit();
+        UserDateText.setValue("LogOutSuccess");
 
+    }
     //회원 탈퇴 성공 -> 자동로그인 정보 deleteimage
     public void UserDeleteSuccess() {
         SharedPreferences Auto = getApplication().getSharedPreferences("user", Activity.MODE_PRIVATE);
@@ -128,15 +171,12 @@ public class UserInfoViewModel extends AndroidViewModel {
         editor.clear();
         editor.commit();
     }
-
     //UI 상태 결과 반환
     public LiveData<String> GetUIStateText(){
         return UIStateText;
     }
-
     //유저 정보 상태 결과 반환
     public LiveData<String> GetUPDateText(){
         return UserDateText;
     }
-
 }
