@@ -1,6 +1,7 @@
 package com.project.namecard.adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.namecard.R;
 import com.project.namecard.models.MainFragmentCardModel;
+import com.project.namecard.views.CardClickView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,11 +65,11 @@ public class NotMineCardRecyclerViewAdapter extends RecyclerView.Adapter<NotMine
                 CardID = Cardlist.get(i).getCardID();
                 ID = Cardlist.get(i).getID();
                 Owner = Cardlist.get(i).getOwner();
-////                Intent intent = new Intent(v.getContext(), CardClickView.class);
-//                intent.putExtra("ID", ID);
-//                intent.putExtra("CardID", CardID);
-//                intent.putExtra("Owner", Owner);
-//                v.getContext().startActivity(intent);
+                Intent intent = new Intent(v.getContext(), CardClickView.class);
+                intent.putExtra("ID", ID);
+                intent.putExtra("CardID", CardID);
+                intent.putExtra("Owner", Owner);
+                v.getContext().startActivity(intent);
             }
         });
     }

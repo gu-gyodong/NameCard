@@ -12,15 +12,16 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Name Card"
         android:roundIcon="@drawable/mainicon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:hardwareAccelerated="true">
+        android:theme="@style/AppTheme">
+        <activity android:name=".views.CardClickView"></activity>
         <activity
-            android:name=".connection.CardAddressRequeset"
-            android:theme="@android:style/Theme.Dialog"/>
+            android:name=".connection.CardAddressRequest"
+            android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".views.CardRegisterView" />
         <activity android:name=".views.MainFragmentInfoView" />
         <activity android:name=".views.MainFragmentExchangeView" />

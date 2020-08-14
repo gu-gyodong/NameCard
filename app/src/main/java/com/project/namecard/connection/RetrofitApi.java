@@ -47,26 +47,11 @@ public interface RetrofitApi {
     Call<MainFragmentInfoModel> UserDeleteRequest(@Query("ID") String ID,
                                                   @Query("PassWord") String PassWord);
 
-    //프레그먼트 카드 리스트 요청
-    @GET("FragmentCardListRequest.php")
-    Call<String> FragmentCardListRequexst(@Query("DBname") String DBname);
+    @GET("CardDeleteMine.php")
+    Call<String> CardDeleteMineRequest(@Query("CardID") String CardID);
 
-//    //카드 등록 요청
-//    @GET("CardRegisterRequest.php")
-//    Call<CardRegisterModel> CardRegisterRequest(@Query("ID") String ID,
-//                                                @Query("Owner") String Owner,
-//                                                @Query("CardImage") String CardImage,
-//                                                @Query("Name") String Name,
-//                                                @Query("Company") String Company,
-//                                                @Query("Depart") String Depart,
-//                                                @Query("Position") String Position,
-//                                                @Query("CompanyNumber") String CompanyNumber,
-//                                                @Query("PhoneNumber") String PhoneNumber,
-//                                                @Query("Email") String Email,
-//                                                @Query("FaxNumber") String FaxNumber,
-//                                                @Query("Address") String Address,
-//                                                @Query("Memo") String Memo,
-//                                                @Query("DBname") String DBname);
+    @GET("CardDeleteNotMine.php")
+    Call<String> CardDeleteNotMineRequest(@Query("CardID") String CardID);
 
 
 

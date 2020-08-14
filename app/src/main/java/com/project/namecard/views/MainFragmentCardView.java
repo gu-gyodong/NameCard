@@ -51,12 +51,13 @@ public class MainFragmentCardView extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CardRegisterView.class);
                 startActivity(intent);
-
             }
         });
 
         //카드 데이터 옵저버
         getDataObserve();
+        //클릭 이벤트
+        BtnClickEvent();
 
         return view;
     }
@@ -80,5 +81,27 @@ public class MainFragmentCardView extends Fragment {
                 binding.NotMineCardList.setAdapter(notMineCardRecyclerViewAdapter);
             }
         });
+    }
+    //클릭 이벤트
+    private void BtnClickEvent() {
+        final View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.MyRepCardImage:
+                        MyRepCardClick();
+                        break;
+                }
+            }
+        };
+        binding.MyRepCardImage.setOnClickListener(listener);
+    }
+    //내 대표 카드 클릭
+    private void MyRepCardClick() {
+        Intent intent = new Intent(getContext(), CardClickView.class);
+        intent.putExtra("ID", viewModel.ID.getValue());
+        intent.putExtra("CardID", viewModel.mainFragmentCardRepository.getMyRepCard().getValue().getCardID());
+        intent.putExtra("Owner", "mine");
+        startActivity(intent);
     }
 }

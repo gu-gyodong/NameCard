@@ -59,8 +59,8 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
         ID.setValue(Auto.getString("ID", null));
         PassWord.setValue(Auto.getString("PassWord", null));
 
-        //Card - > 카드 레포지토리 생성
-        mainFragmentCardRepository = new MainFragmentCardRepository(application);
+        //카드 레포지토리 생성
+        mainFragmentCardRepository = new MainFragmentCardRepository(getApplication());
 
     }
 
@@ -126,7 +126,6 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
                                 UserDateText.setValue("updateSuccess");
                             }
                         }
-
                         @Override
                         public void onFailure(Call<MainFragmentInfoModel> call, Throwable t) {
                             //실패

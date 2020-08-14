@@ -18,6 +18,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.project.namecard.R;
@@ -114,5 +115,17 @@ public class MainView extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    //메인 두번 눌러 종료
+    private long time = 0;
+    @Override
+    public void onBackPressed() {
+            if(System.currentTimeMillis()-time>=2000){
+                time=System.currentTimeMillis();
+                Toast.makeText(getApplicationContext(),"뒤로 버튼을 한번 더 누르면 종료합니다.",Toast.LENGTH_SHORT).show();
+            }else if(System.currentTimeMillis()-time<2000){
+                ActivityCompat.finishAffinity(this);
+            }
     }
 }

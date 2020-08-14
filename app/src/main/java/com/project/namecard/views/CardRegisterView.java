@@ -24,7 +24,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.project.namecard.R;
-import com.project.namecard.connection.CardAddressRequeset;
+import com.project.namecard.connection.CardAddressRequest;
 import com.project.namecard.databinding.ActivityCardRegisterViewBinding;
 import com.project.namecard.viewModels.CardRegisterViewModel;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -139,7 +139,7 @@ public class CardRegisterView extends AppCompatActivity {
 
     //주소 선택 이벤트
     public void addressSelectClickEvent(View view) {
-        Intent intent = new Intent(CardRegisterView.this, CardAddressRequeset.class);
+        Intent intent = new Intent(CardRegisterView.this, CardAddressRequest.class);
                 startActivityForResult(intent, 200);
     }
 

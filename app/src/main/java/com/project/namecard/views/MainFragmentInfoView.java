@@ -81,7 +81,9 @@ public class MainFragmentInfoView extends Fragment {
                     binding.BirthSelect.setVisibility(View.INVISIBLE);
                     binding.state1.setVisibility(View.VISIBLE);
                     binding.state2.setVisibility(View.GONE);
-                } else if (s.equals("state2")) {
+
+                }
+                else if (s.equals("state2")) {
                     binding.id.setEnabled(true);
                     binding.password.setEnabled(true);
                     binding.password.setVisibility(View.VISIBLE);
@@ -170,13 +172,20 @@ public class MainFragmentInfoView extends Fragment {
             public void onClick(View v) {
                 switch (v.getId()){
                     case  R.id.BtnUserUpdate:
+                        //회원 수정 선택
                         BtnUserUpdateClick();
                         break;
                     case  R.id.BirthSelect:
+                        //생일 선택
                         BirthSelectImgClick();
                         break;
                     case  R.id.BtnUserDelete:
+                        //회원 삭제 선택
                         BtnUSerDeleteClick();
+                        break;
+                    case R.id.Cancel:
+                        //취소 클릭
+                        BtnCancelClick();
                         break;
                 }
             }
@@ -184,6 +193,7 @@ public class MainFragmentInfoView extends Fragment {
         binding.BtnUserUpdate.setOnClickListener(listener);
         binding.BirthSelect.setOnClickListener(listener);
         binding.BtnUserDelete.setOnClickListener(listener);
+        binding.Cancel.setOnClickListener(listener);
     }
     //회원 수정 선택
     public void BtnUserUpdateClick() {
@@ -227,11 +237,21 @@ public class MainFragmentInfoView extends Fragment {
     //회원 삭제 선택
     public void BtnUSerDeleteClick() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("정말 회원 탈퇴 하시겠습니까?")
+        final EditText et = new EditText(getContext());
+        builder.setTitle("본인확인")
+                .setMessage("비밀 번호를 입력해주세요")
+                .setView(et)
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        viewModel.BtnUSerDeleteRequest();
+                        String s = et.getText().toString();
+                        if(s.equals(viewModel.PassWord.getValue())){
+                            //회원 탈퇴 실행
+                            viewModel.BtnUSerDeleteRequest();
+                        }
+                        else {
+                            Toast.makeText(getContext(),"비밀 번호 불일치", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 })
                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -242,4 +262,10 @@ public class MainFragmentInfoView extends Fragment {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+    //취소 클릭
+    public void BtnCancelClick() {
+        viewModel.GetUserInfo();
+        viewModel.UIStateText.setValue("state1");
+    }
+
 }

@@ -12,7 +12,7 @@ import android.webkit.WebView;
 
 import com.project.namecard.R;
 
-public class CardAddressRequeset extends Activity {
+public class CardAddressRequest extends Activity {
 
     WebView addressimage;
     Handler handler;

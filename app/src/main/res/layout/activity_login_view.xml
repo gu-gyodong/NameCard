@@ -32,8 +32,6 @@
             android:orientation="vertical">
 
 
-
-
             <EditText
                 android:id="@+id/ID"
                 android:layout_marginLeft="80dp"
