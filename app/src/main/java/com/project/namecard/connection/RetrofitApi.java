@@ -1,8 +1,9 @@
 package com.project.namecard.connection;
 
+import com.project.namecard.models.CardClickDeleteResultModel;
 import com.project.namecard.models.LoginModel;
-import com.project.namecard.models.SignUpModel;
 import com.project.namecard.models.MainFragmentInfoModel;
+import com.project.namecard.models.SignUpModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -45,13 +46,16 @@ public interface RetrofitApi {
     //회원 정보 삭제 요청
     @GET("UserDeleteRequest.php")
     Call<MainFragmentInfoModel> UserDeleteRequest(@Query("ID") String ID,
-                                                  @Query("PassWord") String PassWord);
+                                                  @Query("PassWord") String PassWord,
+                                                  @Query("DBname") String DBname);
 
-    @GET("CardDeleteMine.php")
-    Call<String> CardDeleteMineRequest(@Query("CardID") String CardID);
+    @GET("CardDeleteMineRequest.php")
+    Call<CardClickDeleteResultModel> CardDeleteMineRequest(@Query("CardID") String CardID,
+                                                           @Query("DBname") String DBname);
 
-    @GET("CardDeleteNotMine.php")
-    Call<String> CardDeleteNotMineRequest(@Query("CardID") String CardID);
+    @GET("CardDeleteNotMineRequest.php")
+    Call<CardClickDeleteResultModel> CardDeleteNotMineRequest(@Query("CardID") String CardID,
+                                          @Query("DBname") String DBname);
 
 
 

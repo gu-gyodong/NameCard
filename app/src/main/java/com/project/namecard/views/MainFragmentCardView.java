@@ -100,7 +100,7 @@ public class MainFragmentCardView extends Fragment {
     private void MyRepCardClick() {
         Intent intent = new Intent(getContext(), CardClickView.class);
         intent.putExtra("ID", viewModel.ID.getValue());
-        intent.putExtra("CardID", viewModel.mainFragmentCardRepository.getMyRepCard().getValue().getCardID());
+        intent.putExtra("CardID", viewModel.mainFragmentCardRepository.MyRepCard.getValue().getCardID());
         intent.putExtra("Owner", "mine");
         startActivity(intent);
     }

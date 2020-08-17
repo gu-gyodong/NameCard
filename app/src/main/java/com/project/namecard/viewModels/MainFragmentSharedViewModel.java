@@ -40,6 +40,7 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
     //Info -> 유저 정보 뷰 변수
     public MutableLiveData<String> ID = new MutableLiveData<>();
     public MutableLiveData<String> PassWord = new MutableLiveData<>();
+    public MutableLiveData<String> DBname = new MutableLiveData<>();
     public MutableLiveData<String> Name = new MutableLiveData<>();
     public MutableLiveData<String> Birth = new MutableLiveData<>();
     public MutableLiveData<String> Email = new MutableLiveData<>();
@@ -58,6 +59,7 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
         SharedPreferences Auto = getApplication().getSharedPreferences("user", Activity.MODE_PRIVATE);
         ID.setValue(Auto.getString("ID", null));
         PassWord.setValue(Auto.getString("PassWord", null));
+        DBname.setValue(Auto.getString("DBname", null));
 
         //카드 레포지토리 생성
         mainFragmentCardRepository = new MainFragmentCardRepository(getApplication());
@@ -68,11 +70,11 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
     //////////Card 메소드//////////
     //내 대표 카드 반환
     public LiveData<MainFragmentCardModel> getMyRepCard(){
-        return  mainFragmentCardRepository.getMyRepCard();
+        return  mainFragmentCardRepository.MyRepCard;
     }
     //교환한 카드 반환
     public LiveData<ArrayList<MainFragmentCardModel>> getNotMineCardList(){
-        return  mainFragmentCardRepository.getNotMineCardList();
+        return  mainFragmentCardRepository.NotMineCardList;
     }
 
     //////////Exchange 메소드//////////
@@ -138,7 +140,7 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
     }
     //유저 정보 삭제 요청
     public void BtnUSerDeleteRequest() {
-        retrofitApi.UserDeleteRequest(ID.getValue(), PassWord.getValue()).enqueue(new Callback<MainFragmentInfoModel>() {
+        retrofitApi.UserDeleteRequest(ID.getValue(), PassWord.getValue(), DBname.getValue()).enqueue(new Callback<MainFragmentInfoModel>() {
             @Override
             public void onResponse(Call<MainFragmentInfoModel> call, Response<MainFragmentInfoModel> response) {
                 //성공

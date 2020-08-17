@@ -1,11 +1,5 @@
 package com.project.namecard.views;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,12 +11,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.project.namecard.R;
 import com.project.namecard.databinding.ActivityCardClickViewBinding;
 import com.project.namecard.viewModels.CardClickViewModel;
-import com.project.namecard.viewModels.LoginViewModel;
 
-import java.security.acl.Owner;
 import java.util.ArrayList;
 
 public class CardClickView extends AppCompatActivity {
@@ -90,6 +88,21 @@ public class CardClickView extends AppCompatActivity {
                 }
                 else if(s.equals("UpdateFail")){
                     Toast.makeText(getApplicationContext(), "카드 수정 실패", Toast.LENGTH_SHORT).show();
+                }
+                else if(s.equals("DeleteSuccess")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CardClickView.this);
+                    builder.setTitle("카드 삭제 성공 했습니다.")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //액티비티 종료후 메인 재실행
+                                    Intent intent = new Intent(CardClickView.this, MainView.class);
+                                    finishAffinity();
+                                    startActivity(intent);
+                                }
+                            });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
             }
         });
@@ -206,7 +219,7 @@ public class CardClickView extends AppCompatActivity {
                         break;
                     case R.id.CardDelete:
                         AlertDialog.Builder builder2 = new AlertDialog.Builder(CardClickView.this);
-                        builder2.setTitle("정말 카드 삭제 하시겠습니까?")
+                        builder2.setTitle("정말 카드를 삭제 하시겠습니까?")
                                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -230,6 +243,7 @@ public class CardClickView extends AppCompatActivity {
         binding.EmailPost.setOnClickListener(listener);
         binding.CardUpdate.setOnClickListener(listener);
         binding.UpdateClear.setOnClickListener(listener);
+        binding.CardDelete.setOnClickListener(listener);
     }
     //백버튼 이벤트
     @Override

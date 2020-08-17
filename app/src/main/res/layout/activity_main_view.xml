@@ -14,30 +14,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="bottom">
 
-        <LinearLayout
+
+        <FrameLayout
+            android:id="@+id/mainFrame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="bottom">
+            android:layout_height="wrap_content" />
 
-            <FrameLayout
-                android:id="@+id/mainFrame"
-                android:layout_width="match_parent"
-                android:layout_height="589dp" />
-            
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavigation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:src="#FFFFFF"
-                app:itemIconTint="#1A355B"
-                app:itemTextColor="#1A355B"
-                app:menu="@menu/bottom_menu"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="#FFFFFF"
+            app:itemIconTint="#1A355B"
+            app:itemTextColor="#1A355B"
+            app:menu="@menu/bottom_menu"/>
+
         </LinearLayout>
 
-    </LinearLayout>
-    
+
 </layout>

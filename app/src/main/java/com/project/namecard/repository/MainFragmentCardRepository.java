@@ -46,70 +46,13 @@ public class MainFragmentCardRepository {
         SharedPreferences Auto = application.getSharedPreferences("user", Activity.MODE_PRIVATE);
         ID = Auto.getString("ID", null);
         DBname = Auto.getString("DBname", null);
+
+        //카드리스트 set
+        setCardList();
     }
 
-    //내 대표카드 get
-    public MutableLiveData<MainFragmentCardModel> getMyRepCard() {
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    //결과 값 받기
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("response");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject item = jsonArray.getJSONObject(i);
-
-                        //내 대표카드 일시
-                        if (item.getString("Owner").equals("mine") && item.getString("Rep").equals("rep")) {
-
-                            // 카드 정보 받기
-                            CardID = item.getString("CardID");
-                            Owner = item.getString("Owner");
-                            Name = item.getString("Name");
-                            Company = item.getString("Company");
-                            CardImage = item.getString("CardImage");
-                            Position = item.getString("Position");
-                            PhoneNumber = item.getString("PhoneNumber");
-                            CompanyNumber = item.getString("CompanyNumber");
-                            Address = item.getString("Address");
-                            Email = item.getString("Email");
-
-                            //카드이미지 null
-                            if (CardImage.equals("")) {
-                                DrawImage();
-                                CardImageBitmap = imageBitmap;
-                            }
-                            //카드 이미지 not null
-                            else {
-                                //카드 이미지 string -> bitmap
-                                byte[] imageBytes = Base64.decode(item.getString("CardImage"), Base64.DEFAULT);
-                                Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                                //비트맵 대입
-                                CardImageBitmap = bitmap;
-                            }
-
-                            //정보 set
-                            MyRepCard.setValue(new MainFragmentCardModel(Name, Company, CardImageBitmap, CardID, ID, Owner));
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                //교환한 카드 리스트 -> 초기화 후 라이브데이터 set
-                NotMineCardList.setValue(null);
-                NotMineCardList.setValue(NotMineCard);
-            }
-        };
-        MainFragmentCardRequest mainFragmentCardRequest = new MainFragmentCardRequest(DBname, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(application.getBaseContext());
-        queue.add(mainFragmentCardRequest);
-
-        return MyRepCard;
-    }
-
-    //교환 카드 리스트 get
-    public MutableLiveData<ArrayList<MainFragmentCardModel>> getNotMineCardList() {
+    //카드리스트 set
+    public void setCardList() {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -121,54 +64,178 @@ public class MainFragmentCardRepository {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject item = jsonArray.getJSONObject(i);
 
-                        //교환한 카드들 -> 내카드 아닌것들 세팅
-                        if (item.getString("Owner").equals("notmine")) {
+                        // 카드 정보 받기
+                        CardID = item.getString("CardID");
+                        Owner = item.getString("Owner");
+                        Name = item.getString("Name");
+                        Company = item.getString("Company");
+                        CardImage = item.getString("CardImage");
+                        Position = item.getString("Position");
+                        PhoneNumber = item.getString("PhoneNumber");
+                        CompanyNumber = item.getString("CompanyNumber");
+                        Address = item.getString("Address");
+                        Email = item.getString("Email");
 
-                            // 카드 정보 받기
-                            CardID = item.getString("CardID");
-                            Owner = item.getString("Owner");
-                            Name = item.getString("Name");
-                            Company = item.getString("Company");
-                            CardImage = item.getString("CardImage");
-                            Position = item.getString("Position");
-                            PhoneNumber = item.getString("PhoneNumber");
-                            CompanyNumber = item.getString("CompanyNumber");
-                            Address = item.getString("Address");
-                            Email = item.getString("Email");
+                        //카드이미지 null
+                        if (CardImage.equals("")) {
+                            DrawImage();
+                            CardImageBitmap = imageBitmap;
+                        }
+                        //카드 이미지 not null
+                        else {
+                            //카드 이미지 string -> bitmap
+                            byte[] imageBytes = Base64.decode(item.getString("CardImage"), Base64.DEFAULT);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                            //비트맵 대입
+                            CardImageBitmap = bitmap;
+                        }
 
-                            //카드이미지 null
-                            if (CardImage.equals("")) {
-                                DrawImage();
-                                CardImageBitmap = imageBitmap;
-                            }
-                            //카드 이미지 not null
-                            else {
-                                //카드 이미지 string -> bitmap
-                                byte[] imageBytes = Base64.decode(item.getString("CardImage"), Base64.DEFAULT);
-                                Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                                //비트맵 대입
-                                CardImageBitmap = bitmap;
-                            }
-                            //카드 리스트 set
+                        //내 대표카드 일시
+                        if (item.getString("Owner").equals("mine") && item.getString("Rep").equals("rep")) {
+                            //정보 set
+                            MyRepCard.setValue(new MainFragmentCardModel(Name, Company, CardImageBitmap, CardID, ID, Owner));
+                        }
+                        //교환 한 카드 일시
+                        else if (item.getString("Owner").equals("notmine")) {
+                            //정보 set
                             NotMineCard.add(new MainFragmentCardModel(Name, Company, CardImageBitmap, CardID, ID, Owner));
                         }
 
                     }
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
+                //교환한 카드 리스트 -> 초기화 후 라이브데이터 set
+                NotMineCardList.setValue(NotMineCard);
             }
         };
         MainFragmentCardRequest mainFragmentCardRequest = new MainFragmentCardRequest(DBname, responseListener);
         RequestQueue queue = Volley.newRequestQueue(application.getBaseContext());
         queue.add(mainFragmentCardRequest);
 
-        //교환한 카드 리스트 -> 초기화 후 라이브데이터 set
-        NotMineCardList.setValue(NotMineCard);
-        return NotMineCardList;
     }
+
+//    //내 대표카드 get
+//    public MutableLiveData<MainFragmentCardModel> getMyRepCard() {
+//        Response.Listener<String> responseListener = new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    //결과 값 받기
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    JSONArray jsonArray = jsonObject.getJSONArray("response");
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject item = jsonArray.getJSONObject(i);
+//
+//                        //내 대표카드 일시
+//                        if (item.getString("Owner").equals("mine") && item.getString("Rep").equals("rep")) {
+//
+//                            // 카드 정보 받기
+//                            CardID = item.getString("CardID");
+//                            Owner = item.getString("Owner");
+//                            Name = item.getString("Name");
+//                            Company = item.getString("Company");
+//                            CardImage = item.getString("CardImage");
+//                            Position = item.getString("Position");
+//                            PhoneNumber = item.getString("PhoneNumber");
+//                            CompanyNumber = item.getString("CompanyNumber");
+//                            Address = item.getString("Address");
+//                            Email = item.getString("Email");
+//
+//                            //카드이미지 null
+//                            if (CardImage.equals("")) {
+//                                DrawImage();
+//                                CardImageBitmap = imageBitmap;
+//                            }
+//                            //카드 이미지 not null
+//                            else {
+//                                //카드 이미지 string -> bitmap
+//                                byte[] imageBytes = Base64.decode(item.getString("CardImage"), Base64.DEFAULT);
+//                                Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+//                                //비트맵 대입
+//                                CardImageBitmap = bitmap;
+//                            }
+//
+//                            //정보 set
+//                            MyRepCard.setValue(new MainFragmentCardModel(Name, Company, CardImageBitmap, CardID, ID, Owner));
+//                        }
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                //교환한 카드 리스트 -> 초기화 후 라이브데이터 set
+//                NotMineCardList.setValue(null);
+//                NotMineCardList.setValue(NotMineCard);
+//            }
+//        };
+//        MainFragmentCardRequest mainFragmentCardRequest = new MainFragmentCardRequest(DBname, responseListener);
+//        RequestQueue queue = Volley.newRequestQueue(application.getBaseContext());
+//        queue.add(mainFragmentCardRequest);
+//
+//        return MyRepCard;
+//    }
+//
+//    //교환 카드 리스트 get
+//    public MutableLiveData<ArrayList<MainFragmentCardModel>> getNotMineCardList() {
+//        Response.Listener<String> responseListener = new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    //결과 값 받기
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    JSONArray jsonArray = jsonObject.getJSONArray("response");
+//                    NotMineCard.clear();
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject item = jsonArray.getJSONObject(i);
+//
+//                        //교환한 카드들 -> 내카드 아닌것들 세팅
+//                        if (item.getString("Owner").equals("notmine")) {
+//
+//                            // 카드 정보 받기
+//                            CardID = item.getString("CardID");
+//                            Owner = item.getString("Owner");
+//                            Name = item.getString("Name");
+//                            Company = item.getString("Company");
+//                            CardImage = item.getString("CardImage");
+//                            Position = item.getString("Position");
+//                            PhoneNumber = item.getString("PhoneNumber");
+//                            CompanyNumber = item.getString("CompanyNumber");
+//                            Address = item.getString("Address");
+//                            Email = item.getString("Email");
+//
+//                            //카드이미지 null
+//                            if (CardImage.equals("")) {
+//                                DrawImage();
+//                                CardImageBitmap = imageBitmap;
+//                            }
+//                            //카드 이미지 not null
+//                            else {
+//                                //카드 이미지 string -> bitmap
+//                                byte[] imageBytes = Base64.decode(item.getString("CardImage"), Base64.DEFAULT);
+//                                Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+//                                //비트맵 대입
+//                                CardImageBitmap = bitmap;
+//                            }
+//                            //카드 리스트 set
+//                            NotMineCard.add(new MainFragmentCardModel(Name, Company, CardImageBitmap, CardID, ID, Owner));
+//                        }
+//
+//                    }
+//                }
+//                catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        };
+//        MainFragmentCardRequest mainFragmentCardRequest = new MainFragmentCardRequest(DBname, responseListener);
+//        RequestQueue queue = Volley.newRequestQueue(application.getBaseContext());
+//        queue.add(mainFragmentCardRequest);
+//
+//        //교환한 카드 리스트 -> 초기화 후 라이브데이터 set
+//        NotMineCardList.setValue(NotMineCard);
+//        return NotMineCardList;
+//    }
 
     //이미지 그리기
     private void DrawImage(){

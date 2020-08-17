@@ -1,6 +1,8 @@
 package com.project.namecard.viewModels;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -20,6 +22,7 @@ import com.project.namecard.R;
 import com.project.namecard.connection.CardClickViewRequest;
 import com.project.namecard.connection.CardUpdateRequest;
 import com.project.namecard.connection.RetrofitApi;
+import com.project.namecard.models.CardClickDeleteResultModel;
 import com.project.namecard.models.LoginModel;
 
 import org.json.JSONArray;
@@ -37,6 +40,7 @@ public class CardClickViewModel extends AndroidViewModel {
     public MutableLiveData<String> ID = new MutableLiveData<>();
     public MutableLiveData<String> CardID = new MutableLiveData<>();
     public MutableLiveData<String> Owner = new MutableLiveData<>();
+    public MutableLiveData<String> DBname = new MutableLiveData<>();
     //뷰 변수
     public MutableLiveData<String> Name = new MutableLiveData<>();
     public MutableLiveData<String> Company = new MutableLiveData<>();
@@ -61,7 +65,9 @@ public class CardClickViewModel extends AndroidViewModel {
 
     public CardClickViewModel(@NonNull Application application) {
         super(application);
-
+        //DBname get
+        SharedPreferences Auto = getApplication().getSharedPreferences("user", Activity.MODE_PRIVATE);
+        DBname.setValue(Auto.getString("DBname", null));
     }
     //카드 정보 get
     public void getCardInfo() {
@@ -135,25 +141,31 @@ public class CardClickViewModel extends AndroidViewModel {
     //카드 삭제 클릭
     public void CardDeleteEvent() {
         if(Owner.getValue().equals("mine")){
-            retrofitApi.CardDeleteMineRequest(CardID.getValue()).enqueue(new Callback<String>() {
+            retrofitApi.CardDeleteMineRequest(CardID.getValue(), DBname.getValue()).enqueue(new Callback<CardClickDeleteResultModel>() {
                 @Override
-                public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+                public void onResponse(Call<CardClickDeleteResultModel> call, retrofit2.Response<CardClickDeleteResultModel> response) {
                     //성공
+                    if(response.body().getSuccess().equals("true")){
+                        result.setValue("DeleteSuccess");
+                    }
                 }
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
+                public void onFailure(Call<CardClickDeleteResultModel> call, Throwable t) {
                     //실패
                 }
             });
         }
         else if( Owner.getValue().equals("notmine")){
-            retrofitApi.CardDeleteNotMineRequest(CardID.getValue()).enqueue(new Callback<String>() {
+            retrofitApi.CardDeleteNotMineRequest(CardID.getValue(), DBname.getValue()).enqueue(new Callback<CardClickDeleteResultModel>() {
                 @Override
-                public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+                public void onResponse(Call<CardClickDeleteResultModel> call, retrofit2.Response<CardClickDeleteResultModel> response) {
                     //성공
+                    if(response.body().getSuccess().equals("true")){
+                        result.setValue("DeleteSuccess");
+                    }
                 }
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
+                public void onFailure(Call<CardClickDeleteResultModel> call, Throwable t) {
                     //실패
                 }
             });
