@@ -14,14 +14,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="bottom">
+        android:gravity="bottom"
+        android:orientation="vertical">
 
 
         <FrameLayout
             android:id="@+id/mainFrame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="659dp" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
@@ -30,9 +30,9 @@
             android:src="#FFFFFF"
             app:itemIconTint="#1A355B"
             app:itemTextColor="#1A355B"
-            app:menu="@menu/bottom_menu"/>
+            app:menu="@menu/bottom_menu" />
 
-        </LinearLayout>
+    </LinearLayout>
 
 
 </layout>

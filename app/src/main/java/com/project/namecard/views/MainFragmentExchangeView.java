@@ -4,13 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.project.namecard.R;
 import com.project.namecard.databinding.ActivityMainFragmentExchangeViewBinding;
 import com.project.namecard.databinding.ActivityMainFragmentInfoViewBinding;
@@ -24,6 +30,8 @@ public class MainFragmentExchangeView extends Fragment {
     private ActivityMainFragmentExchangeViewBinding binding;
     //뷰 모델
     private MainFragmentSharedViewModel viewModel;
+    //내 대표 카드 ID
+    private String MyRepCardID;
 
     @Nullable
     @Override
@@ -38,7 +46,41 @@ public class MainFragmentExchangeView extends Fragment {
         //뷰 세팅
         view = binding.getRoot();
 
+        //데이터 옵저버
+        getDataObserver();
 
         return view;
+    }
+    //데이터 옵저버
+    private void getDataObserver() {
+        viewModel.getMyRepCardID().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s.equals("")){
+                    //대표 카드 없을시
+                    binding.QRCodeImageText.setVisibility(View.VISIBLE);
+                    binding.QRCodeImage.setVisibility(View.GONE);
+                    //이미지 삭제
+                    binding.QRCodeImage.setImageBitmap(null);
+                }
+                else {
+                    //대표 카드 있을시
+                    binding.QRCodeImageText.setVisibility(View.GONE);
+                    binding.QRCodeImage.setVisibility(View.VISIBLE);
+                    //QR코드 세팅
+                    MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+                    try{
+                        BitMatrix bitMatrix = multiFormatWriter.encode(s, BarcodeFormat.QR_CODE, 600, 600);
+                        BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                        Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                        //이미지 세팅
+                        binding.QRCodeImage.setImageBitmap(bitmap);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 }

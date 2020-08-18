@@ -32,6 +32,7 @@ public class MainFragmentCardRepository {
     public String ID, DBname;
     //뷰 모델
     public MutableLiveData<CardListModel> MyRepCard = new MutableLiveData<>();//내 대표 카드
+    public MutableLiveData<String> MyRepCardID = new MutableLiveData<>("");//내 대표 카드 ID
     public MutableLiveData<ArrayList<CardListModel>> NotMineCardList = new MutableLiveData<>();//교환한 카드 전체 리스트
     public ArrayList<CardListModel> NotMineCard = new ArrayList<>();
     //이미지 세팅 변수
@@ -95,13 +96,13 @@ public class MainFragmentCardRepository {
                         if (item.getString("Owner").equals("mine") && item.getString("Rep").equals("rep")) {
                             //정보 set
                             MyRepCard.setValue(new CardListModel(Name, Company, CardImageBitmap, CardID, ID, Owner));
+                            MyRepCardID.setValue(CardID);
                         }
                         //교환 한 카드 일시
                         else if (item.getString("Owner").equals("notmine")) {
                             //정보 set
                             NotMineCard.add(new CardListModel(Name, Company, CardImageBitmap, CardID, ID, Owner));
                         }
-
                     }
                 }
                 catch (JSONException e) {
@@ -114,7 +115,6 @@ public class MainFragmentCardRepository {
         MainFragmentCardRequest mainFragmentCardRequest = new MainFragmentCardRequest(DBname, responseListener);
         RequestQueue queue = Volley.newRequestQueue(application.getBaseContext());
         queue.add(mainFragmentCardRequest);
-
     }
 
     //이미지 그리기

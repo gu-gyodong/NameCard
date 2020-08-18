@@ -3,12 +3,18 @@ package com.project.namecard.viewModels;
 import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.project.namecard.connection.MyCardListRequest;
 import com.project.namecard.connection.RetrofitApi;
 import com.project.namecard.models.CardListModel;
 import com.project.namecard.models.MainFragmentInfoModel;
@@ -34,7 +40,6 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
     public MainFragmentCardRepository mainFragmentCardRepository;
 
     //////////Exchange 변수//////////
-
 
     //////////Info 변수//////////
     //Info -> 유저 정보 뷰 변수
@@ -63,23 +68,24 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
 
         //카드 레포지토리 생성
         mainFragmentCardRepository = new MainFragmentCardRepository(getApplication());
-
     }
 
 
     //////////Card 메소드//////////
     //내 대표 카드 반환
     public LiveData<CardListModel> getMyRepCard(){
-        return  mainFragmentCardRepository.MyRepCard;
+        return mainFragmentCardRepository.MyRepCard;
     }
     //교환한 카드 반환
     public LiveData<ArrayList<CardListModel>> getNotMineCardList(){
-        return  mainFragmentCardRepository.NotMineCardList;
+        return mainFragmentCardRepository.NotMineCardList;
+    }
+    //대표카드 아이디 바환
+    public LiveData<String> getMyRepCardID(){
+        return mainFragmentCardRepository.MyRepCardID;
     }
 
     //////////Exchange 메소드//////////
-
-
 
 
     //////////Info 메소드//////////

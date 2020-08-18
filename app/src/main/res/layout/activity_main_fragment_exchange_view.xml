@@ -22,10 +22,19 @@
             android:text="회원 님의 QR 코드 입니다."
             android:textSize="30dp"/>
 
+        <TextView
+            android:id="@+id/QRCodeImageText"
+            android:text="대표 카드가 없습니다\n대표카드를 설정해 주세요"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
         <ImageView
             android:id="@+id/QRCodeImage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
