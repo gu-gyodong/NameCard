@@ -7,19 +7,24 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.project.namecard.R;
 import com.project.namecard.databinding.ActivityMainFragmentExchangeViewBinding;
 import com.project.namecard.databinding.ActivityMainFragmentInfoViewBinding;
+import com.project.namecard.dialog.CardRegisterDialog;
 import com.project.namecard.viewModels.MainFragmentSharedViewModel;
 
 public class MainFragmentExchangeView extends Fragment {
@@ -49,8 +54,12 @@ public class MainFragmentExchangeView extends Fragment {
         //데이터 옵저버
         getDataObserver();
 
+        //클릭 이벤트
+        BtnClickEvent();
+
         return view;
     }
+
     //데이터 옵저버
     private void getDataObserver() {
         viewModel.getMyRepCardID().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -70,7 +79,8 @@ public class MainFragmentExchangeView extends Fragment {
                     //QR코드 세팅
                     MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                     try{
-                        BitMatrix bitMatrix = multiFormatWriter.encode(s, BarcodeFormat.QR_CODE, 600, 600);
+                        //대표카드 아이디 + DB 명
+                        BitMatrix bitMatrix = multiFormatWriter.encode(viewModel.DBname.getValue()+"/"+s, BarcodeFormat.QR_CODE, 600, 600);
                         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                         Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                         //이미지 세팅
@@ -83,4 +93,26 @@ public class MainFragmentExchangeView extends Fragment {
             }
         });
     }
+
+    //클릭 이벤트
+
+
+    private void BtnClickEvent() {
+        final View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.QRCodeScan:
+                        Intent intent = new Intent(getActivity(), QRCodeExchangeView.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.NFCExchange:
+                        break;
+                }
+            }
+        };
+        binding.QRCodeScan.setOnClickListener(listener);
+        binding.NFCExchange.setOnClickListener(listener);
+    }
+
 }

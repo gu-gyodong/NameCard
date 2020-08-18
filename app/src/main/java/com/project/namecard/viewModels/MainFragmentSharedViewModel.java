@@ -2,23 +2,21 @@ package com.project.namecard.viewModels;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.common.BitMatrix;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
-import com.project.namecard.connection.MyCardListRequest;
 import com.project.namecard.connection.RetrofitApi;
 import com.project.namecard.models.CardListModel;
 import com.project.namecard.models.MainFragmentInfoModel;
+import com.project.namecard.models.ResultModel;
 import com.project.namecard.repository.MainFragmentCardRepository;
+import com.project.namecard.views.CardClickView;
+import com.project.namecard.views.MainView;
 
 import java.util.ArrayList;
 
@@ -40,6 +38,10 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
     public MainFragmentCardRepository mainFragmentCardRepository;
 
     //////////Exchange 변수//////////
+    public MutableLiveData<String> MyRepCardID = new MutableLiveData<>();
+    public MutableLiveData<String> UserID = new MutableLiveData<>();
+    public MutableLiveData<String> UserDB = new MutableLiveData<>();
+    public MutableLiveData<String> ExchangeResult = new MutableLiveData<>();
 
     //////////Info 변수//////////
     //Info -> 유저 정보 뷰 변수
@@ -70,7 +72,6 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
         mainFragmentCardRepository = new MainFragmentCardRepository(getApplication());
     }
 
-
     //////////Card 메소드//////////
     //내 대표 카드 반환
     public LiveData<CardListModel> getMyRepCard(){
@@ -80,13 +81,35 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
     public LiveData<ArrayList<CardListModel>> getNotMineCardList(){
         return mainFragmentCardRepository.NotMineCardList;
     }
-    //대표카드 아이디 바환
-    public LiveData<String> getMyRepCardID(){
+    //내 대표카드 아이디 반환
+    public LiveData<String> getMyRepCardID() {
         return mainFragmentCardRepository.MyRepCardID;
     }
 
     //////////Exchange 메소드//////////
-
+    //QR코드 교환
+    public void QRCodeExchange() {
+        retrofitApi.QRCodeExchangeRequest(DBname.getValue(), getMyRepCardID().getValue(), UserDB.getValue(), UserID.getValue()).enqueue(new Callback<ResultModel>() {
+            @Override
+            public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
+                //성공
+                if(response.body().getSuccess().equals("true")){
+                    ExchangeResult.setValue("success");
+                }
+                else {
+                    ExchangeResult.setValue("fail");
+                }
+            }
+            @Override
+            public void onFailure(Call<ResultModel> call, Throwable t) {
+                //실패
+            }
+        });
+    }
+    //QR코드 결과 반환
+    public LiveData<String> GetExchangeResult() {
+        return ExchangeResult;
+    }
 
     //////////Info 메소드//////////
     //유저 기본 정보 받기

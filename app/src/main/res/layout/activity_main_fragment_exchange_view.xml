@@ -43,9 +43,11 @@
 
             <Button
                 android:text="QR 코드 스캔"
+                android:id="@+id/QRCodeScan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <Button
+                android:id="@+id/NFCExchange"
                 android:text="FNC 교환"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

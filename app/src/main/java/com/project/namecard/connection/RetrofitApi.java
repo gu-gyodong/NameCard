@@ -65,5 +65,10 @@ public interface RetrofitApi {
     Call<ResultModel> ChangeRepCardRequest(@Query("CardID") String CardID,
                                            @Query("DBname") String DBname);
 
+    @GET("QRCodeExchangeRequest.php")
+    Call<ResultModel> QRCodeExchangeRequest(@Query("DBname") String DBname,
+                                            @Query("CardID") String CardID,
+                                            @Query("UserDB") String UserDB,
+                                            @Query("UserID") String UserID);
 
 }
