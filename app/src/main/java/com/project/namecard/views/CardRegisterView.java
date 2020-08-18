@@ -57,6 +57,10 @@ public class CardRegisterView extends AppCompatActivity {
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
+        //카드 주인 Get
+        Intent intent = getIntent();
+        viewModel.Owner.setValue(intent.getStringExtra("Owner"));
+
         //카등 등록 정보 옵저버
         CardRegisterDataObserve();
     }

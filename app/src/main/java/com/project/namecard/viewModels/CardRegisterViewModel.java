@@ -127,7 +127,7 @@ public class CardRegisterViewModel extends AndroidViewModel {
                     }
                 }
             };
-            CardRegisterRequest cardRegisterRequest = new CardRegisterRequest(CardImage.getValue(), ID.getValue(), "mine", Name.getValue(), Company.getValue()
+            CardRegisterRequest cardRegisterRequest = new CardRegisterRequest(CardImage.getValue(), ID.getValue(), Owner.getValue(), Name.getValue(), Company.getValue()
                     , Depart.getValue(), Position.getValue(), CompanyNumber.getValue(), PhoneNumber.getValue(), TotalEmail, FaxNumber.getValue(),
                     TotalAddress, Memo.getValue(), DBname, responseListener);
             RequestQueue queue = Volley.newRequestQueue(getApplication().getBaseContext());

@@ -53,9 +53,13 @@ public interface RetrofitApi {
     Call<ResultModel> CardDeleteMineRequest(@Query("CardID") String CardID,
                                             @Query("DBname") String DBname);
 
-    @GET("CardDeleteNotMineRequest.php")
-    Call<ResultModel> CardDeleteNotMineRequest(@Query("CardID") String CardID,
-                                               @Query("DBname") String DBname);
+    @GET("CardDeleteNotMineByMadeMeRequest.php")
+    Call<ResultModel> CardDeleteNotMineByMadeMeRequest(@Query("CardID") String CardID,
+                                                       @Query("DBname") String DBname);
+
+    @GET("CardDeleteNotMineByExchangeRequest.php")
+    Call<ResultModel> CardDeleteNotMineByExchangeRequest(@Query("CardID") String CardID,
+                                                         @Query("DBname") String DBname);
 
     @GET("ChangeRepCardRequest.php")
     Call<ResultModel> ChangeRepCardRequest(@Query("CardID") String CardID,

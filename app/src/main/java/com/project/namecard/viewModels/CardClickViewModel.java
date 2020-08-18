@@ -50,6 +50,8 @@ public class CardClickViewModel extends AndroidViewModel {
     public MutableLiveData<String> Address = new MutableLiveData<>();
     public MutableLiveData<String> Memo = new MutableLiveData<>();
     public MutableLiveData<String> CardImageText = new MutableLiveData<>();
+    //삭제 분류 변수
+    private MutableLiveData<String> CardOwnerCheck = new MutableLiveData<>();
     //결과 변수
     public MutableLiveData<String> result = new MutableLiveData<>("");
     //이미지 변수
@@ -87,6 +89,24 @@ public class CardClickViewModel extends AndroidViewModel {
                         Address.setValue(jsonObject.getString("Address"));
                         Memo.setValue(jsonObject.getString("Memo"));
                         CardImageText.setValue(jsonObject.getString("CardImage"));
+
+                        //카드 주인 분류
+                        String CardOwnerID = jsonObject.getString("ID");
+                        if(CardOwnerID.equals(ID.getValue())){
+                            //카드 주인과 회원 아이디 일치
+                            if(Owner.getValue().equals("mine")){
+                                //카드 내꺼
+                                CardOwnerCheck.setValue("MyCard");
+                            }
+                            else if(Owner.getValue().equals("notmine")) {
+                                //내가 등록한 지인 명함
+                                CardOwnerCheck.setValue("NotMyCardByMadeMe");
+                            }
+                        }
+                        else {
+                            //교환한 지인 카드
+                            CardOwnerCheck.setValue("NotMyCardByExchange");
+                        }
 
                         //카드 이미지 유무 확인
                         if(CardImageText.getValue().equals("")){
@@ -137,7 +157,8 @@ public class CardClickViewModel extends AndroidViewModel {
     }
     //카드 삭제 클릭
     public void CardDeleteEvent() {
-        if(Owner.getValue().equals("mine")){
+        // 내 카드
+        if(CardOwnerCheck.getValue().equals("MyCard")){
             retrofitApi.CardDeleteMineRequest(CardID.getValue(), DBname.getValue()).enqueue(new Callback<ResultModel>() {
                 @Override
                 public void onResponse(Call<ResultModel> call, retrofit2.Response<ResultModel> response) {
@@ -152,8 +173,25 @@ public class CardClickViewModel extends AndroidViewModel {
                 }
             });
         }
-        else if( Owner.getValue().equals("notmine")){
-            retrofitApi.CardDeleteNotMineRequest(CardID.getValue(), DBname.getValue()).enqueue(new Callback<ResultModel>() {
+        //내가 등록한 지인 카드
+        else if(CardOwnerCheck.getValue().equals("NotMyCardByMadeMe")){
+            retrofitApi.CardDeleteNotMineByMadeMeRequest(CardID.getValue(), DBname.getValue()).enqueue(new Callback<ResultModel>() {
+                @Override
+                public void onResponse(Call<ResultModel> call, retrofit2.Response<ResultModel> response) {
+                    //성공
+                    if(response.body().getSuccess().equals("true")){
+                        result.setValue("DeleteSuccess");
+                    }
+                }
+                @Override
+                public void onFailure(Call<ResultModel> call, Throwable t) {
+                    //실패
+                }
+            });
+        }
+        //교환한 지인 카드
+        else if(CardOwnerCheck.getValue().equals("NotMyCardByExchange")){
+            retrofitApi.CardDeleteNotMineByExchangeRequest(CardID.getValue(), DBname.getValue()).enqueue(new Callback<ResultModel>() {
                 @Override
                 public void onResponse(Call<ResultModel> call, retrofit2.Response<ResultModel> response) {
                     //성공

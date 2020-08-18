@@ -1,5 +1,6 @@
 package com.project.namecard.views;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.project.namecard.R;
 import com.project.namecard.adapter.CardRecyclerViewAdapter;
 import com.project.namecard.databinding.ActivityMainFragmentCardViewBinding;
+import com.project.namecard.dialog.CardRegisterDialog;
 import com.project.namecard.models.CardListModel;
 import com.project.namecard.viewModels.MainFragmentSharedViewModel;
 
@@ -30,6 +32,8 @@ public class MainFragmentCardView extends Fragment {
     private ActivityMainFragmentCardViewBinding binding;
     //뷰 모델
     private MainFragmentSharedViewModel viewModel;
+    //다이얼로그
+    private CardRegisterDialog dialog;
 
     @Nullable
     @Override
@@ -44,15 +48,6 @@ public class MainFragmentCardView extends Fragment {
         view = binding.getRoot();
         //리사이클러뷰 메니저 세팅
         binding.NotMineCardList.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        //버튼 클릭 이벤트
-        binding.register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CardRegisterView.class);
-                startActivity(intent);
-            }
-        });
 
         //카드 데이터 옵저버
         getDataObserve();
@@ -102,11 +97,17 @@ public class MainFragmentCardView extends Fragment {
                     case R.id.RepCardSelect:
                         RepCardSelectClick();
                         break;
+                    case R.id.CardRegister:
+                        dialog = new CardRegisterDialog(getContext());
+                        dialog.setCancelable(false);
+                        dialog.show();
+                        break;
                 }
             }
         };
         binding.MyRepCardImage.setOnClickListener(listener);
         binding.RepCardSelect.setOnClickListener(listener);
+        binding.CardRegister.setOnClickListener(listener);
     }
     //내 대표 카드 클릭
     private void MyRepCardClick() {
