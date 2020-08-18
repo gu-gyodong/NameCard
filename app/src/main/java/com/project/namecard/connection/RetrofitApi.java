@@ -1,6 +1,6 @@
 package com.project.namecard.connection;
 
-import com.project.namecard.models.CardClickDeleteResultModel;
+import com.project.namecard.models.ResultModel;
 import com.project.namecard.models.LoginModel;
 import com.project.namecard.models.MainFragmentInfoModel;
 import com.project.namecard.models.SignUpModel;
@@ -50,14 +50,16 @@ public interface RetrofitApi {
                                                   @Query("DBname") String DBname);
 
     @GET("CardDeleteMineRequest.php")
-    Call<CardClickDeleteResultModel> CardDeleteMineRequest(@Query("CardID") String CardID,
-                                                           @Query("DBname") String DBname);
+    Call<ResultModel> CardDeleteMineRequest(@Query("CardID") String CardID,
+                                            @Query("DBname") String DBname);
 
     @GET("CardDeleteNotMineRequest.php")
-    Call<CardClickDeleteResultModel> CardDeleteNotMineRequest(@Query("CardID") String CardID,
-                                          @Query("DBname") String DBname);
+    Call<ResultModel> CardDeleteNotMineRequest(@Query("CardID") String CardID,
+                                               @Query("DBname") String DBname);
 
-
+    @GET("ChangeRepCardRequest.php")
+    Call<ResultModel> ChangeRepCardRequest(@Query("CardID") String CardID,
+                                           @Query("DBname") String DBname);
 
 
 }

@@ -18,7 +18,8 @@
         android:roundIcon="@drawable/mainicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.CardClickView"></activity>
+        <activity android:name=".views.MyCardListView"></activity>
+        <activity android:name=".views.CardClickView" />
         <activity
             android:name=".connection.CardAddressRequest"
             android:theme="@android:style/Theme.Dialog" />

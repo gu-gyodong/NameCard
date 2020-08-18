@@ -10,7 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.project.namecard.connection.RetrofitApi;
-import com.project.namecard.models.MainFragmentCardModel;
+import com.project.namecard.models.CardListModel;
 import com.project.namecard.models.MainFragmentInfoModel;
 import com.project.namecard.repository.MainFragmentCardRepository;
 
@@ -69,11 +69,11 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
 
     //////////Card 메소드//////////
     //내 대표 카드 반환
-    public LiveData<MainFragmentCardModel> getMyRepCard(){
+    public LiveData<CardListModel> getMyRepCard(){
         return  mainFragmentCardRepository.MyRepCard;
     }
     //교환한 카드 반환
-    public LiveData<ArrayList<MainFragmentCardModel>> getNotMineCardList(){
+    public LiveData<ArrayList<CardListModel>> getNotMineCardList(){
         return  mainFragmentCardRepository.NotMineCardList;
     }
 

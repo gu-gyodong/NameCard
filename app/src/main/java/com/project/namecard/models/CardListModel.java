@@ -2,7 +2,7 @@ package com.project.namecard.models;
 
 import android.graphics.Bitmap;
 
-public class MainFragmentCardModel {
+public class CardListModel {
     public String Rep;
     public String CardID;
     public String ID;
@@ -19,7 +19,7 @@ public class MainFragmentCardModel {
     public String Address;
     public String Memo;
 
-    public MainFragmentCardModel(String Name, String Company, Bitmap bitmap, String CardID, String ID, String Owner){
+    public CardListModel(String Name, String Company, Bitmap bitmap, String CardID, String ID, String Owner){
         this.Name = Name;
         this.Company = Company;
         this.CardImage = bitmap;

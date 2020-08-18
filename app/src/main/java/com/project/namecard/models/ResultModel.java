@@ -1,6 +1,6 @@
 package com.project.namecard.models;
 
-public class CardClickDeleteResultModel {
+public class ResultModel {
     public String success;
 
     public String getSuccess() {

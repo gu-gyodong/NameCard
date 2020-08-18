@@ -353,21 +353,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center"
-                        android:weightSum="3">
+                        android:gravity="center">
                         <Button
                             android:id="@+id/CardDelete"
                             android:text="삭제"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <Button
+                            android:id="@+id/RepCardSelect"
+                            android:text="대표카드 설정"
+                            android:layout_marginLeft="40dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
                         <Button
                             android:id="@+id/CardUpdate"
                             android:text="수정"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="40dp"
-                            android:layout_weight="1"/>
+                            android:layout_marginLeft="40dp"/>
                     </LinearLayout>
                     <Button
                         android:id="@+id/UpdateClear"

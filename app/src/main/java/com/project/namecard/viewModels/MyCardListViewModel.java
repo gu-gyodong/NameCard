@@ -1,4 +1,4 @@
-package com.project.namecard.repository;
+package com.project.namecard.viewModels;
 
 import android.app.Activity;
 import android.app.Application;
@@ -9,13 +9,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Base64;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.project.namecard.R;
-import com.project.namecard.connection.MainFragmentCardRequest;
+import com.project.namecard.connection.MyCardListRequest;
 import com.project.namecard.models.CardListModel;
 
 import org.json.JSONArray;
@@ -24,47 +27,42 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainFragmentCardRepository {
+public class MyCardListViewModel extends AndroidViewModel {
 
-    //상속 받기
-    private Application application;
     //디비 변수
-    public String ID, DBname;
+    public MutableLiveData<String> ID = new MutableLiveData<>();
+    public MutableLiveData<String> DBname = new MutableLiveData<>();
     //뷰 모델
-    public MutableLiveData<CardListModel> MyRepCard = new MutableLiveData<>();//내 대표 카드
-    public MutableLiveData<ArrayList<CardListModel>> NotMineCardList = new MutableLiveData<>();//교환한 카드 전체 리스트
-    public ArrayList<CardListModel> NotMineCard = new ArrayList<>();
+    public MutableLiveData<ArrayList<CardListModel>> MyCardList = new MutableLiveData<>();//교환한 카드 전체 리스트
+    public ArrayList<CardListModel> MyCard = new ArrayList<>();
     //이미지 세팅 변수
     private String CardID, Name, Company, CardImage, Position, PhoneNumber, CompanyNumber, Address, Email, Owner;
     private Bitmap CardImageBitmap = null, bitmap = null, imageBitmap = null;
 
+    public MyCardListViewModel(@NonNull Application application) {
+        super(application);
 
-    public MainFragmentCardRepository(Application application){
-        this.application = application;
+        //회원정보 받아오기
+        SharedPreferences Auto = getApplication().getSharedPreferences("user", Activity.MODE_PRIVATE);
+        ID.setValue(Auto.getString("ID", null));
+        DBname.setValue(Auto.getString("DBname", null));
 
-        //회원 정보 받기
-        SharedPreferences Auto = application.getSharedPreferences("user", Activity.MODE_PRIVATE);
-        ID = Auto.getString("ID", null);
-        DBname = Auto.getString("DBname", null);
-
-        //카드리스트 set
-        setCardList();
+        setMyCardList();
     }
 
-    //카드리스트 set
-    public void setCardList() {
+    private void setMyCardList() {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                //결과 값 받기
                 try {
                     //결과 값 받기
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("response");
-                    NotMineCard.clear();
-                    MyRepCard.setValue(null);
+                    MyCard.clear();
+                    MyCardList.setValue(null);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject item = jsonArray.getJSONObject(i);
-
                         // 카드 정보 받기
                         CardID = item.getString("CardID");
                         Owner = item.getString("Owner");
@@ -91,32 +89,21 @@ public class MainFragmentCardRepository {
                             CardImageBitmap = bitmap;
                         }
 
-                        //내 대표카드 일시
-                        if (item.getString("Owner").equals("mine") && item.getString("Rep").equals("rep")) {
-                            //정보 set
-                            MyRepCard.setValue(new CardListModel(Name, Company, CardImageBitmap, CardID, ID, Owner));
-                        }
-                        //교환 한 카드 일시
-                        else if (item.getString("Owner").equals("notmine")) {
-                            //정보 set
-                            NotMineCard.add(new CardListModel(Name, Company, CardImageBitmap, CardID, ID, Owner));
-                        }
+                        MyCard.add(new CardListModel(Name, Company, CardImageBitmap, CardID, ID.getValue(), Owner));
 
                     }
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
                 }
-                //교환한 카드 리스트 -> 초기화 후 라이브데이터 set
-                NotMineCardList.setValue(NotMineCard);
+                //내카드 리스트 -> 초기화 후 라이브데이터 set
+                MyCardList.setValue(MyCard);
             }
         };
-        MainFragmentCardRequest mainFragmentCardRequest = new MainFragmentCardRequest(DBname, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(application.getBaseContext());
-        queue.add(mainFragmentCardRequest);
-
+        MyCardListRequest myCardListRequest = new MyCardListRequest(DBname.getValue(), responseListener);
+        RequestQueue queue = Volley.newRequestQueue(getApplication().getBaseContext());
+        queue.add(myCardListRequest);
     }
-
     //이미지 그리기
     private void DrawImage(){
         //이메일 ID Address 분리
@@ -124,7 +111,7 @@ public class MainFragmentCardRepository {
         EmailID = Email.substring(0, Email.indexOf("@"));
         EmailAddress = "@" + Email.substring(Email.indexOf("@")+1, Email.length());
         //Get 베이스 이미지 Bitmap
-        bitmap = BitmapFactory.decodeResource(application.getResources(), R.drawable.card_base_image);
+        bitmap = BitmapFactory.decodeResource(getApplication().getResources(), R.drawable.card_base_image);
         //새비트맵 생성
         imageBitmap = Bitmap.createBitmap(bitmap.getWidth(),bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         //캔버스 생성
@@ -151,5 +138,9 @@ public class MainFragmentCardRepository {
         canvas.drawText(EmailAddress, 2200, 1100, textSize140);
         canvas.drawText(Company,200, 1630, textSize250);
         canvas.drawText(Address,200, 1800, textSize140);
+    }
+    //내 카드 리스트 반환
+    public LiveData<ArrayList<CardListModel>> getMyCardList() {
+        return MyCardList;
     }
 }

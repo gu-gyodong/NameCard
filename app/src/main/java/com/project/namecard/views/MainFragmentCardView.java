@@ -15,9 +15,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.project.namecard.R;
-import com.project.namecard.adapter.NotMineCardRecyclerViewAdapter;
+import com.project.namecard.adapter.CardRecyclerViewAdapter;
 import com.project.namecard.databinding.ActivityMainFragmentCardViewBinding;
-import com.project.namecard.models.MainFragmentCardModel;
+import com.project.namecard.models.CardListModel;
 import com.project.namecard.viewModels.MainFragmentSharedViewModel;
 
 import java.util.ArrayList;
@@ -65,20 +65,28 @@ public class MainFragmentCardView extends Fragment {
     //카드 데이터 옵저버
     private void getDataObserve(){
         //대표카드 옵저버
-        viewModel.getMyRepCard().observe(getViewLifecycleOwner(), new Observer<MainFragmentCardModel>() {
+        viewModel.getMyRepCard().observe(getViewLifecycleOwner(), new Observer<CardListModel>() {
             @Override
-            public void onChanged(MainFragmentCardModel mainFragmentCardModel) {
+            public void onChanged(CardListModel cardListModel) {
                 //태표카드 이미지 세팅
-                binding.MyRepCardImage.setImageBitmap(mainFragmentCardModel.getCardImage());
+                if(cardListModel == null){
+                    binding.MyRepCardImageText.setVisibility(View.VISIBLE);
+                    binding.MyRepCardImage.setVisibility(View.GONE);
+                }
+                else {
+                    binding.MyRepCardImageText.setVisibility(View.GONE);
+                    binding.MyRepCardImage.setVisibility(View.VISIBLE);
+                    binding.MyRepCardImage.setImageBitmap(cardListModel.getCardImage());
+                }
             }
         });
         //교환 카드 리스트 옵저버
-        viewModel.getNotMineCardList().observe(getViewLifecycleOwner(), new Observer<ArrayList<MainFragmentCardModel>>() {
+        viewModel.getNotMineCardList().observe(getViewLifecycleOwner(), new Observer<ArrayList<CardListModel>>() {
             @Override
-            public void onChanged(ArrayList<MainFragmentCardModel> mainFragmentCardModels) {
+            public void onChanged(ArrayList<CardListModel> cardListModels) {
                 //교환 카드 리스트 이미지 세팅
-                NotMineCardRecyclerViewAdapter notMineCardRecyclerViewAdapter = new NotMineCardRecyclerViewAdapter((ArrayList<MainFragmentCardModel>) mainFragmentCardModels);
-                binding.NotMineCardList.setAdapter(notMineCardRecyclerViewAdapter);
+                CardRecyclerViewAdapter cardRecyclerViewAdapter = new CardRecyclerViewAdapter((ArrayList<CardListModel>) cardListModels);
+                binding.NotMineCardList.setAdapter(cardRecyclerViewAdapter);
             }
         });
     }
@@ -91,10 +99,14 @@ public class MainFragmentCardView extends Fragment {
                     case R.id.MyRepCardImage:
                         MyRepCardClick();
                         break;
+                    case R.id.RepCardSelect:
+                        RepCardSelectClick();
+                        break;
                 }
             }
         };
         binding.MyRepCardImage.setOnClickListener(listener);
+        binding.RepCardSelect.setOnClickListener(listener);
     }
     //내 대표 카드 클릭
     private void MyRepCardClick() {
@@ -102,6 +114,12 @@ public class MainFragmentCardView extends Fragment {
         intent.putExtra("ID", viewModel.ID.getValue());
         intent.putExtra("CardID", viewModel.mainFragmentCardRepository.MyRepCard.getValue().getCardID());
         intent.putExtra("Owner", "mine");
+        intent.putExtra("NotList", "true");
+        startActivity(intent);
+    }
+    //내 대표카드 설정
+    private void RepCardSelectClick() {
+        Intent intent = new Intent(getContext(), MyCardListView.class);
         startActivity(intent);
     }
 }

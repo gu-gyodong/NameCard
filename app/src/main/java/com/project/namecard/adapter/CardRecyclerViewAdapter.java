@@ -9,17 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.namecard.R;
-import com.project.namecard.models.MainFragmentCardModel;
+import com.project.namecard.models.CardListModel;
 import com.project.namecard.views.CardClickView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class NotMineCardRecyclerViewAdapter extends RecyclerView.Adapter<NotMineCardRecyclerViewAdapter.MyViewHolder> {
+public class CardRecyclerViewAdapter extends RecyclerView.Adapter<CardRecyclerViewAdapter.MyViewHolder> {
 
     private String CardID, ID, Owner;
 
@@ -37,15 +35,15 @@ public class NotMineCardRecyclerViewAdapter extends RecyclerView.Adapter<NotMine
     }
 
     //리스트 대입
-    private ArrayList<MainFragmentCardModel> Cardlist;
-    public NotMineCardRecyclerViewAdapter(ArrayList<MainFragmentCardModel> Cardlist){
+    private ArrayList<CardListModel> Cardlist;
+    public CardRecyclerViewAdapter(ArrayList<CardListModel> Cardlist){
         this.Cardlist = Cardlist;
     }
 
     //뷰 연결
     @NonNull
     @Override
-    public NotMineCardRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public CardRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.not_mine_card_recyclerview_adapter, viewGroup, false);
         return new MyViewHolder(v);
     }
@@ -69,6 +67,7 @@ public class NotMineCardRecyclerViewAdapter extends RecyclerView.Adapter<NotMine
                 intent.putExtra("ID", ID);
                 intent.putExtra("CardID", CardID);
                 intent.putExtra("Owner", Owner);
+                intent.putExtra("NotList", "false");
                 v.getContext().startActivity(intent);
             }
         });

@@ -29,6 +29,8 @@ public class CardClickView extends AppCompatActivity {
     private ActivityCardClickViewBinding binding;
     //뷰 모델
     private CardClickViewModel viewModel;
+    //내 카드 리스트 판별 변수
+    private String CheckList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,13 @@ public class CardClickView extends AppCompatActivity {
         viewModel.ID.setValue(intent.getStringExtra("ID"));
         viewModel.CardID.setValue(intent.getStringExtra("CardID"));
         viewModel.Owner.setValue(intent.getStringExtra("Owner"));
+
+        if(intent.getStringExtra("NotList").equals("true")){
+            CheckList = "NotList";
+        }
+        else if(intent.getStringExtra("NotList").equals("false")) {
+            CheckList = "List";
+        }
 
         viewModel.getCardInfo();
 
@@ -104,6 +113,21 @@ public class CardClickView extends AppCompatActivity {
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 }
+                else if(s.equals("RepCardChangeSuccess")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CardClickView.this);
+                    builder.setTitle("대표카드를 변경 했습니다.")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //액티비티 종료후 메인 재실행
+                                    Intent intent = new Intent(CardClickView.this, MainView.class);
+                                    finishAffinity();
+                                    startActivity(intent);
+                                }
+                            });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
             }
         });
     }
@@ -111,11 +135,20 @@ public class CardClickView extends AppCompatActivity {
     public void UIControl() {
         if(viewModel.Owner.getValue().equals("mine")){
             //내 카드일시 수정 버튼 보이게
-            binding.CardUpdate.setVisibility(View.VISIBLE);
+            if(CheckList.equals("NotList")){
+                binding.CardUpdate.setVisibility(View.VISIBLE);
+                binding.RepCardSelect.setVisibility(View.GONE);
+            }
+            else if (CheckList.equals("List")) {
+                binding.CardUpdate.setVisibility(View.VISIBLE);
+                binding.RepCardSelect.setVisibility(View.VISIBLE);
+            }
+
         }
         else if(viewModel.Owner.getValue().equals("notmine")) {
             //남 카드일시 수정 버튼 안보이게
             binding.CardUpdate.setVisibility(View.GONE);
+            binding.RepCardSelect.setVisibility(View.GONE);
         }
     }
     //권한 요청
@@ -234,6 +267,24 @@ public class CardClickView extends AppCompatActivity {
                         AlertDialog alertDialog2 = builder2.create();
                         alertDialog2.show();
                         break;
+                    case R.id.RepCardSelect:
+                        AlertDialog.Builder builder3 = new AlertDialog.Builder(CardClickView.this);
+                        builder3.setTitle("대표카드를 이 카드로 바꾸시겠습니까?")
+                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        viewModel.ChangeRepCard();
+                                    }
+                                })
+                                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+                        AlertDialog alertDialog3 = builder3.create();
+                        alertDialog3.show();
+                        break;
                 }
             }
         };
@@ -244,6 +295,7 @@ public class CardClickView extends AppCompatActivity {
         binding.CardUpdate.setOnClickListener(listener);
         binding.UpdateClear.setOnClickListener(listener);
         binding.CardDelete.setOnClickListener(listener);
+        binding.RepCardSelect.setOnClickListener(listener);
     }
     //백버튼 이벤트
     @Override

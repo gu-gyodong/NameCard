@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Base64;
-import android.widget.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -22,10 +21,8 @@ import com.project.namecard.R;
 import com.project.namecard.connection.CardClickViewRequest;
 import com.project.namecard.connection.CardUpdateRequest;
 import com.project.namecard.connection.RetrofitApi;
-import com.project.namecard.models.CardClickDeleteResultModel;
-import com.project.namecard.models.LoginModel;
+import com.project.namecard.models.ResultModel;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -141,31 +138,31 @@ public class CardClickViewModel extends AndroidViewModel {
     //카드 삭제 클릭
     public void CardDeleteEvent() {
         if(Owner.getValue().equals("mine")){
-            retrofitApi.CardDeleteMineRequest(CardID.getValue(), DBname.getValue()).enqueue(new Callback<CardClickDeleteResultModel>() {
+            retrofitApi.CardDeleteMineRequest(CardID.getValue(), DBname.getValue()).enqueue(new Callback<ResultModel>() {
                 @Override
-                public void onResponse(Call<CardClickDeleteResultModel> call, retrofit2.Response<CardClickDeleteResultModel> response) {
+                public void onResponse(Call<ResultModel> call, retrofit2.Response<ResultModel> response) {
                     //성공
                     if(response.body().getSuccess().equals("true")){
                         result.setValue("DeleteSuccess");
                     }
                 }
                 @Override
-                public void onFailure(Call<CardClickDeleteResultModel> call, Throwable t) {
+                public void onFailure(Call<ResultModel> call, Throwable t) {
                     //실패
                 }
             });
         }
         else if( Owner.getValue().equals("notmine")){
-            retrofitApi.CardDeleteNotMineRequest(CardID.getValue(), DBname.getValue()).enqueue(new Callback<CardClickDeleteResultModel>() {
+            retrofitApi.CardDeleteNotMineRequest(CardID.getValue(), DBname.getValue()).enqueue(new Callback<ResultModel>() {
                 @Override
-                public void onResponse(Call<CardClickDeleteResultModel> call, retrofit2.Response<CardClickDeleteResultModel> response) {
+                public void onResponse(Call<ResultModel> call, retrofit2.Response<ResultModel> response) {
                     //성공
                     if(response.body().getSuccess().equals("true")){
                         result.setValue("DeleteSuccess");
                     }
                 }
                 @Override
-                public void onFailure(Call<CardClickDeleteResultModel> call, Throwable t) {
+                public void onFailure(Call<ResultModel> call, Throwable t) {
                     //실패
                 }
             });
@@ -205,6 +202,23 @@ public class CardClickViewModel extends AndroidViewModel {
         canvas.drawText(EmailAddress, 2200, 1100, textSize140);
         canvas.drawText(Company.getValue(),200, 1630, textSize250);
         canvas.drawText(Address.getValue(),200, 1800, textSize140);
+    }
+    //대표 카드 변경
+    public void ChangeRepCard() {
+        retrofitApi.ChangeRepCardRequest(CardID.getValue(), DBname.getValue()).enqueue(new Callback<ResultModel>() {
+            @Override
+            public void onResponse(Call<ResultModel> call, retrofit2.Response<ResultModel> response) {
+                //성공
+                if(response.body().getSuccess().equals("true")){
+                    result.setValue("RepCardChangeSuccess");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel> call, Throwable t) {
+                //실패
+            }
+        });
     }
     //이미지 return
     public LiveData<Bitmap> ImageBitmapReturn() {
