@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.NFC" />
 
     <application
         android:allowBackup="true"
@@ -18,16 +19,13 @@
         android:roundIcon="@drawable/mainicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.QRCodeExchangeView"></activity>
+        <activity android:name=".views.CardExchangeView" />
         <activity android:name=".views.MyCardListView" />
         <activity android:name=".views.CardClickView" />
         <activity
             android:name=".connection.CardAddressRequest"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".views.CardRegisterView" />
-        <activity android:name=".views.MainFragmentInfoView" />
-        <activity android:name=".views.MainFragmentExchangeView" />
-        <activity android:name=".views.MainFragmentCardView" />
         <activity android:name=".views.SignUpView" />
         <activity android:name=".views.LoginView">
             <intent-filter>

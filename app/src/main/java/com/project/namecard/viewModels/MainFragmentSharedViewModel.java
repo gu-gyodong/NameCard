@@ -88,8 +88,8 @@ public class MainFragmentSharedViewModel extends AndroidViewModel {
 
     //////////Exchange 메소드//////////
     //QR코드 교환
-    public void QRCodeExchange() {
-        retrofitApi.QRCodeExchangeRequest(DBname.getValue(), getMyRepCardID().getValue(), UserDB.getValue(), UserID.getValue()).enqueue(new Callback<ResultModel>() {
+    public void CardExchange() {
+        retrofitApi.CardExchangeRequest(DBname.getValue(), getMyRepCardID().getValue(), UserDB.getValue(), UserID.getValue()).enqueue(new Callback<ResultModel>() {
             @Override
             public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
                 //성공

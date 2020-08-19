@@ -1,5 +1,12 @@
 package com.project.namecard.views;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -7,24 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.project.namecard.R;
 import com.project.namecard.databinding.ActivityMainFragmentExchangeViewBinding;
-import com.project.namecard.databinding.ActivityMainFragmentInfoViewBinding;
-import com.project.namecard.dialog.CardRegisterDialog;
 import com.project.namecard.viewModels.MainFragmentSharedViewModel;
 
 public class MainFragmentExchangeView extends Fragment {
@@ -35,8 +30,6 @@ public class MainFragmentExchangeView extends Fragment {
     private ActivityMainFragmentExchangeViewBinding binding;
     //뷰 모델
     private MainFragmentSharedViewModel viewModel;
-    //내 대표 카드 ID
-    private String MyRepCardID;
 
     @Nullable
     @Override
@@ -95,18 +88,20 @@ public class MainFragmentExchangeView extends Fragment {
     }
 
     //클릭 이벤트
-
-
     private void BtnClickEvent() {
         final View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()){
                     case R.id.QRCodeScan:
-                        Intent intent = new Intent(getActivity(), QRCodeExchangeView.class);
-                        startActivity(intent);
+                        Intent intent1 = new Intent(getActivity(), CardExchangeView.class);
+                        intent1.putExtra("Check", "QRCode");
+                        startActivity(intent1);
                         break;
                     case R.id.NFCExchange:
+                        Intent intent2 = new Intent(getActivity(), CardExchangeView.class);
+                        intent2.putExtra("Check", "NFC");
+                        startActivity(intent2);
                         break;
                 }
             }

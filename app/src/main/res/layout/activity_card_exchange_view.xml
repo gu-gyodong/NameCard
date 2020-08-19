@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".views.CardExchangeView">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.project.namecard.viewModels.MainFragmentSharedViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <TextView
+            android:textSize="20dp"
+            android:text="휴대폰의 뒷면을 맞대어\n환면을 터치해주세요\n교환이 완료 되면 나가기를 눌러주세요"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</layout>
