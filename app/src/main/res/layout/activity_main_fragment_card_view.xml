@@ -1,68 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".views.MainFragmentCardView">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.project.namecard.viewModels.MainFragmentSharedViewModel" />
     </data>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="내 대표 명함"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:id="@+id/MyRepCardImageText"
+            android:layout_width="402dp"
+            android:layout_height="224dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/image_box"
+            android:gravity="center"
+            android:text="대표카드가 없습니다\n대표카드를 설정해주세요"
+            android:textSize="30dp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/MyRepCardImage"
+            android:layout_width="402dp"
+            android:layout_height="224dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/image_box"
+            android:visibility="gone" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:text="대표카드가 없습니다\n대표카드를 설정해주세요"
-                android:textSize="30dp"
-                android:gravity="center"
-                android:id="@+id/MyRepCardImageText"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="15dp"
-                android:visibility="gone"/>
-
-            <ImageView
-                android:id="@+id/MyRepCardImage"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="15dp"
-                android:visibility="visible"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/RepCardSelect"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-                <Button
-                    android:id="@+id/RepCardSelect"
-                    android:text="대표카드 설정"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"/>
-                <Button
-                    android:id="@+id/CardRegister"
-                    android:text="카드등록"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"/>
-            </LinearLayout>
+                android:layout_marginRight="20dp"
+                android:background="@drawable/button_styles"
+                android:text="내 명함 목록"
+                android:textSize="20dp" />
 
-<!--            <ScrollView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/NotMineCardList"
-                android:layout_width="match_parent"
-                android:layout_height="374dp"
-                android:layout_margin="15dp" />
-<!--            </ScrollView>-->
+            <Button
+                android:id="@+id/CardRegister"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/button_styles"
+                android:text="카드 등록"
+                android:textSize="20dp" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="지인 명함"
+            android:textSize="15dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/NotMineCardList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@drawable/image_box" />
+
+    </LinearLayout>
 
 
 </layout>

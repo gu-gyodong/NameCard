@@ -8,8 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 
+import com.project.namecard.Database.CardListDatabase;
 import com.project.namecard.connection.RetrofitApi;
+import com.project.namecard.models.CardListModel;
 import com.project.namecard.models.LoginModel;
 
 import retrofit2.Call;
@@ -31,6 +34,7 @@ public class LoginViewModel extends AndroidViewModel {
     //레트로핏
     private RetrofitApi retrofitApi;
     //유저 디비
+    private CardListDatabase db;
 
     //뷰모델 초기세팅
     public LoginViewModel(@NonNull Application application) {
@@ -74,6 +78,8 @@ public class LoginViewModel extends AndroidViewModel {
                         editor.putString("PassWord", password);
                         editor.putString("DBname", DBname);
                         editor.commit();
+
+                        GetRoomData();
                     }
                     else{
                         success.setValue("false");
@@ -87,6 +93,11 @@ public class LoginViewModel extends AndroidViewModel {
                 //실패
             }
         });
+    }
+
+    //DB 동기화
+    public void GetRoomData() {
+        db = Room.databaseBuilder(getApplication().getBaseContext(), CardListDatabase.class, "CardList").build();
     }
 
     //로그인 결과 반환

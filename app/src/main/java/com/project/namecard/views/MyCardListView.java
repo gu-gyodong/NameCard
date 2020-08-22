@@ -53,10 +53,6 @@ public class MyCardListView extends AppCompatActivity {
                     CardRecyclerViewAdapter cardRecyclerViewAdapter = new CardRecyclerViewAdapter(repCardSelectModels);
                     binding.MyCardList.setAdapter(cardRecyclerViewAdapter);
                 }
-                else {
-                    binding.MyCardList.setVisibility(View.GONE);
-                    binding.MyCardListText.setVisibility(View.VISIBLE);
-                }
             }
         });
     }

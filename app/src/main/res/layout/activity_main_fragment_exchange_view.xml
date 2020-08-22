@@ -5,6 +5,7 @@
     tools:context=".views.MainFragmentExchangeView">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.project.namecard.viewModels.MainFragmentSharedViewModel" />
@@ -19,39 +20,70 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
             android:text="회원 님의 QR 코드 입니다."
-            android:textSize="30dp"/>
+            android:textSize="30dp" />
 
         <TextView
             android:id="@+id/QRCodeImageText"
-            android:text="대표 카드가 없습니다\n대표카드를 설정해 주세요"
-            android:textSize="20dp"
-            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:gravity="center"
+            android:text="대표 카드가 없습니다\n대표카드를 설정해 주세요"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/QRCodeImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
-                android:text="QR 코드 스캔"
+            <LinearLayout
                 android:id="@+id/QRCodeScan"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <Button
-                android:id="@+id/NFCExchange"
-                android:text="FNC 교환"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginRight="60dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QR 코드 스캔"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/qrcode_exchange_image" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/NFCExchange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FNC 교환"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/nfc_exchange_image" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

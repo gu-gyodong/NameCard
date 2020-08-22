@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".views.MainView">
-    
+
     <data>
+
         <variable
             name="viewModel"
             type="com.project.namecard.viewModels.MainFragmentSharedViewModel" />
@@ -17,22 +17,20 @@
         android:gravity="bottom"
         android:orientation="vertical">
 
-
         <FrameLayout
             android:id="@+id/mainFrame"
             android:layout_width="match_parent"
-            android:layout_height="659dp" />
+            android:layout_height="670dp" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="#FFFFFF"
-            app:itemIconTint="#1A355B"
-            app:itemTextColor="#1A355B"
+            android:background="#D7CCC8"
+            app:itemIconTint="#4E342E"
+            app:itemTextColor="#4E342E"
             app:menu="@menu/bottom_menu" />
 
     </LinearLayout>
-
 
 </layout>

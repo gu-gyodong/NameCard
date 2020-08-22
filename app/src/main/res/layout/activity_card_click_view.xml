@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".views.CardClickView">
-    
+
     <data>
+
         <variable
             name="viewModel"
             type="com.project.namecard.viewModels.CardClickViewModel" />
@@ -17,368 +18,421 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/cardImage"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"/>
+                android:layout_height="250dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_margin="15dp">
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:layout_marginBottom="10dp">
+                    android:weightSum="3">
+
                     <TextView
-                        android:text="이름"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="25dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="20dp"/>
+                        android:text="이름"
+                        android:textSize="25dp" />
+
                     <EditText
-                        android:hint="이름"
-                        android:text="@={viewModel.Name}"
-                        android:singleLine="true"
-                        android:enabled="false"
                         android:id="@+id/name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
+                        android:layout_marginRight="40dp"
                         android:layout_weight="2"
+                        android:enabled="false"
                         android:gravity="left"
-                        android:layout_marginRight="40dp"/>
+                        android:hint="이름"
+                        android:singleLine="true"
+                        android:text="@={viewModel.Name}"
+                        android:textSize="15dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:layout_marginBottom="10dp">
+                    android:weightSum="3">
+
                     <TextView
-                        android:text="회사명"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="25dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="20dp"/>
+                        android:text="회사명"
+                        android:textSize="25dp" />
+
                     <EditText
-                        android:hint="회사명"
-                        android:text="@={viewModel.Company}"
-                        android:singleLine="true"
-                        android:enabled="false"
-                        android:textSize="15dp"
                         android:id="@+id/company"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="40dp"
                         android:layout_weight="2"
+                        android:enabled="false"
                         android:gravity="left"
-                        android:layout_marginRight="40dp"/>
+                        android:hint="회사명"
+                        android:singleLine="true"
+                        android:text="@={viewModel.Company}"
+                        android:textSize="15dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:layout_marginBottom="10dp">
+                    android:weightSum="3">
+
                     <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="부서"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="25dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="20dp"/>
+                        android:textSize="25dp" />
+
                     <EditText
-                        android:hint="부서"
-                        android:text="@={viewModel.Depart}"
-                        android:singleLine="true"
-                        android:enabled="false"
                         android:id="@+id/depart"
-                        android:textSize="15dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="40dp"
                         android:layout_weight="2"
+                        android:enabled="false"
                         android:gravity="left"
-                        android:layout_marginRight="40dp"/>
+                        android:hint="부서"
+                        android:singleLine="true"
+                        android:text="@={viewModel.Depart}"
+                        android:textSize="15dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:layout_marginBottom="10dp">
+                    android:weightSum="3">
+
                     <TextView
-                        android:text="직책"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="25dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="20dp"/>
+                        android:text="직책"
+                        android:textSize="25dp" />
+
                     <EditText
-                        android:hint="직책"
-                        android:text="@={viewModel.Position}"
-                        android:singleLine="true"
-                        android:enabled="false"
                         android:id="@+id/position"
                         android:layout_width="0dp"
-                        android:textSize="15dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="40dp"
                         android:layout_weight="2"
+                        android:enabled="false"
                         android:gravity="left"
-                        android:layout_marginRight="40dp"/>
+                        android:hint="직책"
+                        android:singleLine="true"
+                        android:text="@={viewModel.Position}"
+                        android:textSize="15dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:layout_marginBottom="10dp">
+                    android:weightSum="3">
+
                     <TextView
-                        android:text="회사번호"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="24dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="20dp"/>
+                        android:text="회사번호"
+                        android:textSize="24dp" />
+
                     <EditText
                         android:id="@+id/companyNumber"
-                        android:text="@={viewModel.CompanyNumber}"
-                        android:singleLine="true"
-                        android:enabled="false"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
                         android:layout_weight="1.7"
+                        android:enabled="false"
                         android:gravity="left"
-                        android:hint="회사번호"/>
+                        android:hint="회사번호"
+                        android:singleLine="true"
+                        android:text="@={viewModel.CompanyNumber}"
+                        android:textSize="15dp" />
+
                     <ImageView
                         android:id="@+id/CompanyCall"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:src="@drawable/card_call"
-                        android:layout_weight="0.3"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="30dp"/>
+                        android:layout_marginRight="30dp"
+                        android:layout_weight="0.3"
+                        android:src="@drawable/card_call" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:layout_marginBottom="10dp">
+                    android:weightSum="3">
+
                     <TextView
-                        android:text="휴대폰"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="25dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="20dp"/>
+                        android:text="휴대폰"
+                        android:textSize="25dp" />
+
                     <EditText
                         android:id="@+id/phoneNumber"
-                        android:text="@={viewModel.PhoneNumber}"
-                        android:enabled="false"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
                         android:layout_weight="1.4"
+                        android:enabled="false"
                         android:gravity="left"
-                        android:hint="휴대폰"/>
+                        android:hint="휴대폰"
+                        android:text="@={viewModel.PhoneNumber}"
+                        android:textSize="15dp" />
+
                     <ImageView
                         android:id="@+id/PhoneCall"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:src="@drawable/card_call"
-                        android:layout_weight="0.3"/>
+                        android:layout_weight="0.3"
+                        android:src="@drawable/card_call" />
+
                     <ImageView
                         android:id="@+id/PhoneMessage"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:src="@drawable/card_message"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"
                         android:layout_weight="0.3"
-                        android:layout_marginRight="30dp"/>
+                        android:src="@drawable/card_message" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:layout_marginBottom="10dp">
+                    android:weightSum="3">
+
                     <TextView
-                        android:text="이메일"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="25dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="20dp"/>
+                        android:text="이메일"
+                        android:textSize="25dp" />
+
                     <EditText
-                        android:hint="이메일"
-                        android:text="@={viewModel.Email}"
-                        android:singleLine="true"
-                        android:enabled="false"
                         android:id="@+id/email"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
                         android:layout_weight="1.7"
-                        android:gravity="left"/>
+                        android:enabled="false"
+                        android:gravity="left"
+                        android:hint="이메일"
+                        android:singleLine="true"
+                        android:text="@={viewModel.Email}"
+                        android:textSize="15dp" />
+
                     <ImageView
                         android:id="@+id/EmailPost"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:src="@drawable/card_email"
-                        android:layout_weight="0.3"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="30dp"/>
+                        android:layout_marginRight="30dp"
+                        android:layout_weight="0.3"
+                        android:src="@drawable/card_email" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:layout_marginBottom="10dp">
+                    android:weightSum="3">
+
                     <TextView
-                        android:text="팩스"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="25dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginRight="20dp"/>
+                        android:text="팩스"
+                        android:textSize="25dp" />
+
                     <EditText
-                        android:hint="팩스"
-                        android:text="@={viewModel.FaxNumber}"
-                        android:singleLine="true"
-                        android:enabled="false"
                         android:id="@+id/faxNumber"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
+                        android:layout_marginRight="40dp"
                         android:layout_weight="2"
+                        android:enabled="false"
                         android:gravity="left"
-                        android:layout_marginRight="40dp"/>
+                        android:hint="팩스"
+                        android:singleLine="true"
+                        android:text="@={viewModel.FaxNumber}"
+                        android:textSize="15dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:layout_marginBottom="10dp">
+                    android:weightSum="3">
+
                     <TextView
-                        android:text="주소"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="25dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:layout_marginLeft="40dp"
                         android:singleLine="true"
-                        android:layout_marginRight="20dp"/>
+                        android:text="주소"
+                        android:textSize="25dp" />
+
                     <EditText
-                        android:hint="주소"
-                        android:text="@={viewModel.Address}"
-                        android:singleLine="true"
-                        android:enabled="false"
                         android:id="@+id/address"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
+                        android:layout_marginRight="40dp"
                         android:layout_weight="2"
+                        android:enabled="false"
                         android:gravity="left"
-                        android:layout_marginRight="40dp"/>
+                        android:hint="주소"
+                        android:singleLine="true"
+                        android:text="@={viewModel.Address}"
+                        android:textSize="15dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp">
+                    android:layout_marginBottom="15dp"
+                    android:orientation="vertical">
+
                     <TextView
-                        android:text="메모"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="25dp"
                         android:layout_marginLeft="55dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="10dp"
+                        android:text="메모"
+                        android:textSize="25dp" />
+
                     <EditText
-                        android:hint="내용을 입력 하세요"
-                        android:text="@={viewModel.Memo}"
-                        android:singleLine="true"
-                        android:enabled="false"
                         android:id="@+id/memo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/image_box"
                         android:gravity="top"
+                        android:hint="내용을 입력 하세요"
                         android:lines="4"
                         android:minLines="4"
-                        android:maxLines="8"
                         android:padding="10dp"
                         android:scrollbars="vertical"
-                        android:layout_marginRight="25dp"
-                        android:layout_marginLeft="25dp"
-                        android:layout_marginBottom="15dp"/>
+                        android:text="@={viewModel.Memo}" />
+
                     <LinearLayout
                         android:id="@+id/ButtonLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
-                        <Button
-                            android:id="@+id/CardDelete"
-                            android:text="삭제"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                        android:layout_marginTop="25dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
                         <Button
                             android:id="@+id/RepCardSelect"
-                            android:text="대표카드 설정"
-                            android:layout_marginLeft="40dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                        <Button
-                            android:id="@+id/CardUpdate"
-                            android:text="수정"
+                            android:layout_width="260dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="25dp"
+                            android:background="@drawable/button_styles"
+                            android:text="대표명함 설정" />
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="40dp"/>
+                            android:layout_marginBottom="25dp"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/CardDelete"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/button_styles"
+                                android:text="삭제" />
+
+                            <Button
+                                android:id="@+id/CardUpdate"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:background="@drawable/button_styles"
+                                android:text="수정" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
+
                     <Button
                         android:id="@+id/UpdateClear"
-                        android:text="수정완료"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
+                        android:layout_width="260dp"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"/>
+                        android:layout_gravity="center"
+                        android:background="@drawable/button_styles"
+                        android:text="수정완료"
+                        android:visibility="gone" />
                 </LinearLayout>
 
             </LinearLayout>

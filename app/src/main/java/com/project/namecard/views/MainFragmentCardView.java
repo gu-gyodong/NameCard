@@ -99,7 +99,7 @@ public class MainFragmentCardView extends Fragment {
                         break;
                     case R.id.CardRegister:
                         dialog = new CardRegisterDialog(getContext());
-                        dialog.setCancelable(false);
+//                        dialog.setCancelable(true);
                         dialog.show();
                         break;
                 }

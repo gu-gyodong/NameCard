@@ -31,6 +31,8 @@ public class CardExchangeView extends AppCompatActivity {
     private ActivityCardExchangeViewBinding binding;
     //뷰 모델
     private MainFragmentSharedViewModel viewModel;
+    //판별 변수
+    private String Check;
     //NFC
     private NfcAdapter nfcAdapter;
     private NdefMessage ndefMessage;
@@ -50,7 +52,7 @@ public class CardExchangeView extends AppCompatActivity {
 
         //QR, NFC 체크
         Intent intent = getIntent();
-        String Check = intent.getExtras().getString("Check");
+        Check = intent.getExtras().getString("Check");
 
         //QR코드 스캐너
         if(Check.equals("QRCode")){
@@ -106,6 +108,7 @@ public class CardExchangeView extends AppCompatActivity {
         if(result !=null){
             //취소시
             if(result.getContents()==null){
+                Check = "QRCode";
                 Toast.makeText(this,"취소되었습니다.",Toast.LENGTH_LONG).show();
                 finish();
             }

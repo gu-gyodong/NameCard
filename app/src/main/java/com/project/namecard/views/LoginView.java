@@ -3,6 +3,7 @@ package com.project.namecard.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +33,10 @@ public class LoginView extends AppCompatActivity {
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
+        //키보드 처리
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        //로그인 결과 옵저버
         LoginSuccessObserve();
     }
     //로그인 결과 옵저버

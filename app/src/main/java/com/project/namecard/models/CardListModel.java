@@ -2,8 +2,13 @@ package com.project.namecard.models;
 
 import android.graphics.Bitmap;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class CardListModel {
     public String Rep;
+    @PrimaryKey
     public String CardID;
     public String ID;
     public String Owner;

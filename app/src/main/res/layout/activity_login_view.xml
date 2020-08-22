@@ -1,79 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".views.LoginView">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.project.namecard.viewModels.LoginViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#b4b4b4"
-        android:gravity="top">
-
-
-        <ImageView
-            android:layout_width="198dp"
-            android:layout_height="254dp"
-            android:src="@drawable/loginicon"
-            android:layout_gravity="center"/>
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="top"
             android:orientation="vertical">
 
+            <ImageView
+                android:layout_width="198dp"
+                android:layout_height="254dp"
+                android:layout_gravity="center"
+                android:layout_margin="50dp"
+                android:src="@drawable/loginicon" />
 
-            <EditText
-                android:id="@+id/ID"
-                android:layout_marginLeft="80dp"
-                android:layout_marginRight="80dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:singleLine="true"
-                android:hint="ID"
-                android:text="@={viewModel.ID}"/>
-            <EditText
-                android:id="@+id/PassWord"
-                android:layout_marginLeft="80dp"
-                android:layout_marginRight="80dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:hint="PASSWORD"
-                android:inputType="textPassword"
-                android:text="@={viewModel.PassWord}"/>
             <LinearLayout
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/SignUp"
-                    android:layout_marginRight="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:gravity="top"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/ID"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="회원가입"
-                    android:onClick="SignUpBtnClick"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/SignIn"
-                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginRight="80dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="ID"
+                    android:singleLine="true"
+                    android:text="@={viewModel.ID}" />
+
+                <EditText
+                    android:id="@+id/PassWord"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="로그인"
-                    android:onClick="@{() -> viewModel.SignInBtnClick()}"/>
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginRight="80dp"
+                    android:layout_marginBottom="30dp"
+                    android:hint="PASSWORD"
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:text="@={viewModel.PassWord}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/SignUp"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:onClick="SignUpBtnClick"
+                        android:background="@drawable/button_styles"
+                        android:text="회원가입" />
+
+                    <Button
+                        android:id="@+id/SignIn"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_styles"
+                        android:onClick="@{() -> viewModel.SignInBtnClick()}"
+                        android:text="로그인" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
+
 </layout>
