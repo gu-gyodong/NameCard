@@ -19,14 +19,17 @@
         android:roundIcon="@drawable/mainicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.CardExchangeView" />
+        <activity android:name=".views.QRCodeExchangeView"></activity>
+        <activity android:name=".views.NFCExchangeView" />
         <activity android:name=".views.MyCardListView" />
-        <activity android:name=".views.CardClickView"
+        <activity
+            android:name=".views.CardClickView"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".connection.CardAddressRequest"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".views.CardRegisterView"
+        <activity
+            android:name=".views.CardRegisterView"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".views.SignUpView" />
         <activity
@@ -41,7 +44,8 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".views.MainView"
+        <activity
+            android:name=".views.MainView"
             android:windowSoftInputMode="adjustPan" />
     </application>
 

@@ -94,13 +94,11 @@ public class MainFragmentExchangeView extends Fragment {
             public void onClick(View v) {
                 switch (v.getId()){
                     case R.id.QRCodeScan:
-                        Intent intent1 = new Intent(getActivity(), CardExchangeView.class);
-                        intent1.putExtra("Check", "QRCode");
+                        Intent intent1 = new Intent(getActivity(), QRCodeExchangeView.class);
                         startActivity(intent1);
                         break;
                     case R.id.NFCExchange:
-                        Intent intent2 = new Intent(getActivity(), CardExchangeView.class);
-                        intent2.putExtra("Check", "NFC");
+                        Intent intent2 = new Intent(getActivity(), NFCExchangeView.class);
                         startActivity(intent2);
                         break;
                 }

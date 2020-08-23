@@ -11,28 +11,23 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-import com.project.namecard.databinding.ActivityCardExchangeViewBinding;
+import com.project.namecard.databinding.ActivityNfcExchangeViewBinding;
 import com.project.namecard.viewModels.MainFragmentSharedViewModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
-public class CardExchangeView extends AppCompatActivity {
+public class NFCExchangeView extends AppCompatActivity {
 
     //바인딩
-    private ActivityCardExchangeViewBinding binding;
+    private ActivityNfcExchangeViewBinding binding;
     //뷰 모델
     private MainFragmentSharedViewModel viewModel;
-    //판별 변수
-    private String Check;
     //NFC
     private NfcAdapter nfcAdapter;
     private NdefMessage ndefMessage;
@@ -43,25 +38,14 @@ public class CardExchangeView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //데이터 바인딩
-        binding = ActivityCardExchangeViewBinding.inflate(getLayoutInflater());
+        binding = ActivityNfcExchangeViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         //뷰 모델
         viewModel = new ViewModelProvider(this).get(MainFragmentSharedViewModel.class);
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
-        //QR, NFC 체크
-        Intent intent = getIntent();
-        Check = intent.getExtras().getString("Check");
-
-        //QR코드 스캐너
-        if(Check.equals("QRCode")){
-            new IntentIntegrator(this).initiateScan();
-        }
-        //NFC 교환
-        else {
-            nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        }
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         //데이터 옵저버
         getDataObserver();
@@ -82,7 +66,7 @@ public class CardExchangeView extends AppCompatActivity {
                     String Info = viewModel.DBname.getValue()+"/"+s;
                     //ndef 메시지 생성
                     ndefMessage = createNdefMessage(Info);
-                    nfcAdapter.setNdefPushMessage(ndefMessage, CardExchangeView.this);
+                    nfcAdapter.setNdefPushMessage(ndefMessage, NFCExchangeView.this);
 
                 }
             }
@@ -99,32 +83,6 @@ public class CardExchangeView extends AppCompatActivity {
                 }
             }
         });
-   }
-
-   //QR코드 교환 결과 result
-   @Override
-   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result !=null){
-            //취소시
-            if(result.getContents()==null){
-                Check = "QRCode";
-                Toast.makeText(this,"취소되었습니다.",Toast.LENGTH_LONG).show();
-                finish();
-            }
-            //교환 값 존재
-            else {
-                //읽은 상댇방 카드 ID set
-                String total = result.getContents();
-                String UserDB = total.substring(0, total.indexOf("/"));
-                String UserID = total.substring(total.indexOf("/")+1);
-                //Data Set
-                viewModel.UserDB.setValue(UserDB);
-                viewModel.UserID.setValue(UserID);
-                viewModel.CardExchange();
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
    }
 
    //NFC ndef 메시지 생성성
@@ -226,7 +184,7 @@ public class CardExchangeView extends AppCompatActivity {
         enableForegroundDispatchSystem();
     }
     private void enableForegroundDispatchSystem(){
-        Intent intent = new Intent(this, CardExchangeView.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
+        Intent intent = new Intent(this, NFCExchangeView.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
         IntentFilter[] intentFilters = new IntentFilter[] {};
         nfcAdapter.enableForegroundDispatch(this,pendingIntent,intentFilters,null);
