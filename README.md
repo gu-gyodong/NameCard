@@ -5,4 +5,4 @@
  
  ## 시연 영상
  - 회원가입, 로그인
- 
+ <image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656344-09c3c980-eaf3-11ea-9002-1165b16df914.gif" >
