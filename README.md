@@ -4,5 +4,8 @@
  
  
  ## 시연 영상
- - 회원가입, 로그인
+ - 회원가입, 로그인, 메인 프래그먼트
+ <div>
  <image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656344-09c3c980-eaf3-11ea-9002-1165b16df914.gif" >
+  <image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656347-0defe700-eaf3-11ea-90c2-2833f46fa83c.gif" >
+   </div>
