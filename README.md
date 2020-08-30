@@ -32,7 +32,7 @@
 </div>
  
  - 내카드 대표카드 설정, 카드 수정
-   <div>
+<div>
 <image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656362-219b4d80-eaf3-11ea-8380-f67c591d62fe.gif" >
 <image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656365-23651100-eaf3-11ea-95e7-71a8847e2425.gif" >
 </div>
