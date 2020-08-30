@@ -17,16 +17,35 @@
 </div>
  
  - 카드등록 클릭
- <image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656354-134d3180-eaf3-11ea-8308-f6946cec2573.jpg" >
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656354-134d3180-eaf3-11ea-8308-f6946cec2573.jpg" >
  
  - 카드등록, 사진 미등록시 기본제공 이미지
- <div>
+<div>
 <image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656355-147e5e80-eaf3-11ea-909d-f4e3149f8381.gif" >
 <image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656356-1811e580-eaf3-11ea-8543-c620d2b45ab3.jpg" >
 </div>
  
  - 사진 등록시
-  <div>
+<div>
 <image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656357-1d6f3000-eaf3-11ea-8bf2-1ba6e8e4866f.gif" >
 <image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656360-1fd18a00-eaf3-11ea-8631-4c243cae7eb0.jpg" >
 </div>
+ 
+ - 내카드 대표카드 설정, 카드 수정
+   <div>
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656362-219b4d80-eaf3-11ea-8380-f67c591d62fe.gif" >
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656365-23651100-eaf3-11ea-95e7-71a8847e2425.gif" >
+</div>
+ 
+ - QR 코드 교환
+<div>
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656366-252ed480-eaf3-11ea-8092-bb97ce38a064.gif" >
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656367-26f89800-eaf3-11ea-8d37-6e8e73bfe222.gif" >
+</div>
+ 
+ - NFC 교환
+<div>
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656368-28c25b80-eaf3-11ea-9499-5c95b9dc10a5.gif" >
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/64879323/91656370-29f38880-eaf3-11ea-813e-fac4cb6e5b87.gif" >
+</div>
+ 
